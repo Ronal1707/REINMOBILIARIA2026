@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+     <!-- Metadata -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Resultados Excelentes en el sector inmobiliario">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1">
+
+        <!-- OG Metadata -->
+        <meta property="og:title" content="RE Inmobiliaria SAS">
+        <meta property="og:site_name" content="RE Inmobiliaria SAS">
+        <meta property="og:description" content="Resultados Excelentes en el sector inmobiliario">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="assets/img/reisas-og-img.jpg">
+        <!--<meta property="og:url" content="https://reinmobiliariasas.com/">-->
+        <!--<meta property="fb:app_id" content="775678255785283">-->
+
+        <!-- Links  -->
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+    <title>Buscar Inmuebles</title>
+</head>
+<body>
+    <header id="main-header-container"></header>
+    <h1>Buscar Inmuebles</h1>
+    <p>Bienvenido a la página de búsqueda de inmuebles.</p>
+    <p id="estado_api" style="font-weight: bold;"></p>
+
+    <div class="layout">
+        
+        <!-- 🔹 Columna izquierda: Filtros -->
+        <aside class="filtros">
+            <h3>Filtros</h3>
+
+            <select id="f_ciudad">
+                <option value="0">Ciudad</option>
+                <option value="101">Bogotá</option>
+                <option value="102">Medellín</option>
+            </select>
+
+            <select id="f_tipo">
+                <option value="0">Tipo</option>
+                <option value="1">Apartamento</option>
+                <option value="2">Casa</option>
+            </select>
+
+            <select id="f_operacion">
+                <option value="0">Operación</option>
+                <option value="1">Arriendo</option>
+                <option value="2">Venta</option>
+            </select>
+
+            <!-- HABITACIONES -->
+            <label for="f_habitaciones">Habitaciones: <span id="hab_val">1</span></label>
+            <input id="f_habitaciones" type="range" min="1" max="10" value="1">
+
+            <!-- BAÑOS -->
+            <label for="f_banos">Baños: <span id="ban_val">1</span></label>
+            <input id="f_banos" type="range" min="1" max="10" value="1">
+
+            <input id="f_min" type="number" placeholder="Precio mínimo">
+            <input id="f_max" type="number" placeholder="Precio máximo">
+
+            <button id="btn_filtrar">Buscar</button>
+            <button id="btn_reset" class="btn-reset">Restablecer</button>
+
+        </aside>
+
+        <!-- 🔹 Columna derecha: contenido -->
+        <main class="contenido">
+            <h1>Buscar Inmuebles</h1>
+            <p id="estado_api" style="font-weight: bold;"></p>
+
+            <section id="buscar_inmuebles" class="grid-cards"></section>
+        </main>
+
+    </div>
+
+    <section id="buscar_inmuebles" class="grid-cards">
+        <!-- Aquí se insertarán automáticamente las tarjetas de inmuebles -->
+    </section>
+
+    <script type="module" src="dist/buscar_inmuebles.js"></script>
+    <script id="site" type="module" src="dist/main.js"></script>
+</body>
+</html>
