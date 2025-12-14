@@ -33,28 +33,32 @@
               <div class="select-group">
                   <!-- Tipo de Operación -->
                   <select id="f_operacion" class="search-select">
-                    <option value="0">Tipo de Gestión</option>
-                    <option value="1">Venta</option>
-                    <option value="2">Arriendo</option>
+                    <option value="0" hidden>Tipo de Gestión</option>
+                  <option value="1">Arriendo</option>
+                  <option value="2">Venta</option>
                   </select>
 
                   <!-- Tipo de Inmueble -->
                   <select id="f_tipo" class="search-select">
-                    <option value="0">Tipo de Inmueble</option>
-                    <option value="1">Casa</option>
-                    <option value="2">Apartamento</option>
-                    <option value="3">Oficina</option>
-                    <option value="4">Local Comercial</option>
-                    <option value="5">Lote</option>
+                    <option value="0" hidden>Tipo de Inmueble</option>
+                    <option value="1">Apartamento</option>
+                    <option value="2">Casa</option>
+                    <option value="4">Oficina</option>
+                    <option value="5">Local</option>
                     <option value="6">Bodega</option>
-                    <option value="7">Finca</option>
-                    <option value="8">Parqueadero</option>
+                    <option value="7">Lote</option>
+                    <option value="8">Finca</option>
+                    <option value="9">Edificio</option>
+                    <option value="11">Apartaestudio</option>
+                    <option value="22">Casa Residencial</option>
                   </select>
               </div>
             </div>
 
             <!-- Botón que activa el filtro -->
-            <button id="btn_buscar" class="search-button">Buscar</button>
+            <div class="container-btn-search">
+              <button id="btn_buscar" class="search-button">Buscar</button>
+            </div>
           </div>
         </div>
         <section class="section-inmuebles-destacados">
@@ -157,8 +161,10 @@
 
         </section>
 
-      <script type="module" src="dist/destacados.js" ></script>
       <script id="site" type="module" src="dist/main.js"></script>
+      <script type="module" src="dist/destacados.js" ></script>
       <script type="module" src="dist/carousel.js"></script>
+      <script type="module" src="dist/index_busqueda.js"></script>
+
     </body>
 </html>

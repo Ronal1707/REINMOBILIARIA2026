@@ -16,11 +16,6 @@ body {
 
 }
 
-
-
-
-
-
 .cta-section {
    position: relative;
    width: 100%;
@@ -77,18 +72,31 @@ body {
    border-radius: 4px 0 0 4px;
    font-size: 1rem;
 }
+.container-btn-search{
+   display: flex;
+   align-items: center;
+   margin-top: 40px;
+}
+
 .search-button {
-   padding: 0 1.5rem;
+   padding: 5px 5rem;
    border: none;
    background-color: var(--primary-color);
    color: #fff;
-   font-size: 1rem;
+   font-size: 2rem;
    border-radius: 0 4px 4px 0;
    cursor: pointer;
+   border-radius: 8px;
+   
 }
 .search-button:hover {
-   background-color: var(--primary-color);
+   background-color: #da6d1a;
+   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
+
+/* .search-button:hover {
+   background-color: var(--primary-color);
+} */
 .select-group {
    display: flex;
    flex: 1 1 300px;
@@ -258,11 +266,9 @@ h2 {
   transition: all 0.4s ease;
 }
 
-
 .grid-cards {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
    gap: 3rem;
    padding: 2rem;
 }
@@ -276,14 +282,12 @@ h2 {
 }
 
 .card {
-   width: 300px;                 /* 🔥 Todas del mismo tamaño */
    border-radius: 20px;
    overflow: hidden;
    background: #fff;
    box-shadow: 0px 0px 15px 3px rgba(19, 17, 15, 0.2);
    display: flex;
-   flex-direction: column;       /* Mantiene la estructura vertical */
-
+   flex-direction: column;
 }
 
 .card span{
@@ -294,6 +298,7 @@ h2 {
    text-align: center;
    margin-top: 0.5rem;
 }
+
 
 .card__image {
    width: 100%;
@@ -312,12 +317,22 @@ h2 {
    gap: 1rem;
 }
 
+.card__info a{
+   text-align: center;
+}
+
 
 .card__description {
   font-size: 0.9rem;
   padding: 1em ;
   text-align: left;
 }
+.container__specs{
+   display: flex;
+   justify-content: center;
+   gap: 2rem;
+}
+
 .card__price {
    color: var(--Foundation-Orange-Normal, var(--primary-color));
    text-align: center;
@@ -1013,3 +1028,22 @@ h2 {
    background-color: #ff6600;
 }
 
+.paginacion {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0;
+}
+
+.paginacion button {
+    padding: 1rem 2.5rem;
+    border-radius: 999px;
+    border: none;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.paginacion button:hover {
+    opacity: 0.85;
+}

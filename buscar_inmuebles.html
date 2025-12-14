@@ -23,9 +23,9 @@
 </head>
 <body>
     <header id="main-header-container"></header>
-    <h1>Buscar Inmuebles</h1>
-    <p>Bienvenido a la página de búsqueda de inmuebles.</p>
-    <p id="estado_api" style="font-weight: bold;"></p>
+    <!-- <h1>Buscar Inmuebles</h1>
+    <p>Bienvenido a la página de búsqueda de inmuebles.</p> -->
+    <!-- <p id="estado_api" style="font-weight: bold;"></p> -->
 
     <div class="layout">
         
@@ -34,15 +34,23 @@
             <h3>Filtros</h3>
 
             <select id="f_ciudad">
-                <option value="0">Ciudad</option>
+                <option value="0" hidden>Ciudad</option>
                 <option value="101">Bogotá</option>
                 <option value="102">Medellín</option>
             </select>
 
             <select id="f_tipo">
-                <option value="0">Tipo</option>
+                <option value="0" hidden>Tipo</option>
                 <option value="1">Apartamento</option>
                 <option value="2">Casa</option>
+                <option value="4">Oficina</option>
+                <option value="5">Local</option>
+                <option value="6">Bodega</option>
+                <option value="7">Lote</option>
+                <option value="8">Finca</option>
+                <option value="9">Edificio</option>
+                <option value="11">Apartaestudio</option>
+                <option value="22">Casa Residencial</option>
             </select>
 
             <select id="f_operacion">
@@ -52,12 +60,16 @@
             </select>
 
             <!-- HABITACIONES -->
-            <label for="f_habitaciones">Habitaciones: <span id="hab_val">1</span></label>
-            <input id="f_habitaciones" type="range" min="1" max="10" value="1">
+            <label for="f_habitaciones">
+            Habitaciones: <span id="hab_val">0</span>
+            </label>
+            <input id="f_habitaciones" type="range" min="0" max="10" value="0">
 
             <!-- BAÑOS -->
-            <label for="f_banos">Baños: <span id="ban_val">1</span></label>
-            <input id="f_banos" type="range" min="1" max="10" value="1">
+            <label for="f_banos">
+            Baños: <span id="ban_val">0</span>
+            </label>
+            <input id="f_banos" type="range" min="0" max="10" value="0">
 
             <input id="f_min" type="number" placeholder="Precio mínimo">
             <input id="f_max" type="number" placeholder="Precio máximo">
@@ -73,16 +85,12 @@
             <p id="estado_api" style="font-weight: bold;"></p>
 
             <section id="buscar_inmuebles" class="grid-cards"></section>
+            <div id="paginacion" class="paginacion"></div>
         </main>
-
     </div>
 
-    <section id="buscar_inmuebles" class="grid-cards">
-        <!-- Aquí se insertarán automáticamente las tarjetas de inmuebles -->
-    </section>
-
     <script type="module" src="dist/buscar_inmuebles.js"></script>
-    <script id="site" type="module" src="dist/main.js"></script>
-    
+    <script type="module" src="dist/bedroomsBathrooms.js"></script>
+    <script type="module" src="dist/main.js"></script>
 </body>
 </html>

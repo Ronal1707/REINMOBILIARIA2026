@@ -37,20 +37,20 @@ export function crearCard(inmueble) {
       <div class="card">
 
         <div class="carousel">
-          <button class="carousel-btn left">&#10094;</button>
 
           <div class="carousel-track" data-index="0">
             ${fotos.map(f => `<img src="${f}" class="card__image">`).join("")}
           </div>
 
-          <button class="carousel-btn right">&#10095;</button>
         </div>
 
         <div class="card__info">
           <span class="card__title">${titulo}</span>
           <p class="card__price">$${precio}</p>
           <p class="card__description">${descripcionCorta}</p>
-          <p class="card__inm__especs">${specs.trim()}</p>
+          <div class="container__specs">
+            <p class="card__inm__especs">${specs.trim()}</p>
+          </div>
           <a href="inmueble.html?codigo=${inmueble.Codigo_Inmueble}" class="btn btn--primary">Ver más</a>
         </div>
 

@@ -38,42 +38,23 @@ btnReset.addEventListener("click", () => {
     console.log("🔄 Filtros restablecidos");
 });
 
+export function obtenerEndpointConFiltros(cantidad) {
+    let endpoint = `ApiSimiweb/response/v2.1.1/filtroInmueble/`;
+    endpoint += `limite/1/total/${cantidad}/`;
 
+    const add = (key, value) => {
+        if (value && value !== "0") {
+            endpoint += `${key}/${value}/`;
+        }
+    };
 
-// ---------- FUNCION QUE CONSTRUYE EL ENDPOINT ----------
-export function obtenerEndpointConFiltros() {
+    add("ciudad", document.getElementById("f_ciudad")?.value);
+    add("tipoInm", document.getElementById("f_tipo")?.value);
+    add("tipOper", document.getElementById("f_operacion")?.value);
+    add("valmin", document.getElementById("f_min")?.value);
+    add("valmax", document.getElementById("f_max")?.value);
+    add("alcobas", document.getElementById("f_habitaciones")?.value);
+    add("banios", document.getElementById("f_banos")?.value);
 
-    const ciudad = document.getElementById("f_ciudad").value || 0;
-    const tipo = document.getElementById("f_tipo").value || 0;
-    const operacion = document.getElementById("f_operacion").value || 0;
-    const min = document.getElementById("f_min").value || 0;
-    const max = document.getElementById("f_max").value || 0;
-
-    const habitaciones = habSlider.value || 0;
-    const banos = banSlider.value || 0;
-
-    const endpoint = `
-        ApiSimiweb/response/v2.1.1/filtroInmueble/
-        limite/1/
-        total/40/
-        departamento/0/
-        ciudad/${ciudad}/
-        zona/0/
-        barrio/0/
-        tipoInm/${tipo}/
-        tipOper/${operacion}/
-        areamin/0/
-        areamax/0/
-        valmin/${min}/
-        valmax/${max}/
-        campo/0/
-        order/0/
-        banios/${banos}/
-        alcobas/${habitaciones}/
-        garajes/0/
-        sede/0/
-        usuario/0
-    `;
-
-    return endpoint.replace(/\s+/g, "");
+    return endpoint;
 }
