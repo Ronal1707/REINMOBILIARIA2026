@@ -1,0 +1,1064 @@
+@import "header.css";
+
+* { margin: 0; padding: 0; box-sizing: border-box;}
+:root {
+  --primary-color: #e56d11;
+  --text-color: #333333;
+}
+
+@font-face {font-family: "Montserrat";  src: url("../assets/font/Montserrat-VariableFont_wght.ttf")   format("truetype");}
+@font-face {font-family: "Anastasia";  src: url("../assets/font/Anna.ttf")   format("truetype");}
+
+body {
+   font-family: 'Montserrat', sans-serif;
+   background-color: #fffaee;
+   
+
+}
+
+.cta-section {
+   position: relative;
+   width: 100%;
+   height: 100vh;  /* adjust as needed */
+   background: url("../assets/img/IMG_4121.jpg") center/cover no-repeat;
+}
+
+.cta-section .overlay {
+   position: absolute;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 90%;
+   max-width: 1000px;
+
+   padding: 80px;
+   background: rgba(255, 255, 255, 0.5);
+   backdrop-filter: blur(5px);
+   border-radius: 16px;
+   box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+   z-index: 500;
+}
+
+.cta-section .overlay .title {
+   font-family: 'Anastasia';
+   font-size: 4rem;
+   color: #333;
+   margin-bottom: 1.5rem;
+   text-align: center;
+   text-shadow:
+   2px 2px 2px rgba(255,255,255,0.9),   /* small tight glow */
+   2px 2px 8px rgba(255,255,255,0.6);   /* larger softer glow */
+}
+.cta-search {
+   width: 100%;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 1rem;
+   justify-content: center;
+}
+.input-group {
+   display: flex;
+   flex: 1 1 300px;
+}
+.search-input {
+   flex: 1;
+   padding: 0.75rem 1rem;
+   border: 1px solid #ccc;
+   border-right: none;
+   border-radius: 4px 0 0 4px;
+   font-size: 1rem;
+}
+.container-btn-search{
+   display: flex;
+   align-items: center;
+   margin-top: 40px;
+}
+
+.search-button {
+   padding: 5px 5rem;
+   border: none;
+   background-color: var(--primary-color);
+   color: #fff;
+   font-size: 2rem;
+   border-radius: 0 4px 4px 0;
+   cursor: pointer;
+   border-radius: 8px;
+   
+}
+.search-button:hover {
+   background-color: #da6d1a;
+   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+/* .search-button:hover {
+   background-color: var(--primary-color);
+} */
+.select-group {
+   display: flex;
+   flex: 1 1 300px;
+   gap: 1rem;
+}
+.search-select {
+   flex: 1;
+   padding: 0.75rem 1rem;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   font-size: 1rem;
+   appearance: none;
+   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' stroke='%23666' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+   background-repeat: no-repeat;
+   background-position: right 1rem center;
+}
+
+h2 {
+   font-family: "Montserrat";
+   font-size: clamp(1.9rem, 4vw, 3.9rem);
+   color: var(--Foundation-Orange-Normal, #000000);
+   text-align: center;
+   padding: 2.5rem;
+}
+
+.section-inmuebles-destacados {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.slider-destacados {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 700px;
+}
+
+.slider-window {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  min-height: 260px;
+}
+
+/* Track con animación */
+.slider-track {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Animación cuando se pasa a la derecha */
+.slide-next {
+  animation: slideNext 0.45s ease forwards;
+}
+
+@keyframes slideNext {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animación cuando se pasa a la izquierda */
+.slide-prev {
+  animation: slidePrev 0.45s ease forwards;
+}
+
+@keyframes slidePrev {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Botones del slider */
+.slider-btn {
+  background: #ff9000;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
+}
+
+/* Botón izquierdo */
+#btn_prev {
+  left: 50px;
+}
+
+/* Botón derecho */
+#btn_next {
+  right: 50px;
+}
+
+/* Hover */
+.slider-btn:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-50%) scale(1.08);
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+  #btn_prev {
+    left: -10px;
+  }
+  #btn_next {
+    right: -10px;
+  }
+  .slider-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 22px;
+  }
+}
+
+/* Animación */
+.slide-enter {
+  opacity: 0;
+  transform: translateX(40px);
+  
+}
+
+.slide-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.4s ease;
+  
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: all 0.4s ease;
+}
+
+.grid-cards {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+   gap: 3rem;
+   padding: 2rem;
+}
+
+#destacados {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;   /* Centra horizontal */
+   gap: 2.5rem;                 /* Espacio entre tarjetas */
+   padding: 2rem;
+}
+
+.card {
+   width: 100%;
+   max-width: 300px;
+   border-radius: 20px;
+   overflow: hidden;
+   background: #fff;
+   box-shadow: 0px 0px 15px 3px rgba(19, 17, 15, 0.2);
+   display: flex;
+   flex-direction: column;
+}
+
+@media (max-width: 768px) {
+   .card {
+      max-width: 250px;
+   }
+}
+
+@media (max-width: 480px) {
+   .card {
+      max-width: 100%;
+   }
+}
+
+.card span{
+   font-family: "Montserrat";
+   font-size: 1.4rem;
+   font-weight: 600;
+   color: var(--text-color);
+   text-align: center;
+   margin-top: 0.5rem;
+}
+
+
+.card__image {
+   width: 100%;
+   height: 200px;               /* 🔥 Todas las imágenes iguales */
+   object-fit: cover;           /* Recorta sin deformar */
+}
+
+
+.card__info {
+   padding: 1em;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;  /* 🔥 Asegura equilibrio vertical */
+   flex-grow: 1;                     /* Ocupa espacio sobrante */
+   font-family: "Montserrat";
+   gap: 1rem;
+}
+
+.card__info a{
+   text-align: center;
+}
+
+
+.card__description {
+  font-size: 0.9rem;
+  padding: 1em ;
+  text-align: left;
+}
+.container__specs{
+   display: flex;
+   justify-content: center;
+   gap: 2rem;
+}
+
+.card__price {
+   color: var(--Foundation-Orange-Normal, var(--primary-color));
+   text-align: center;
+   text-shadow: 1.198px 0.799px 1.598px rgba(0, 0, 0, 0.25);
+   font-size: 1.6rem;
+   font-style: normal;
+   font-weight: 800;
+   line-height: normal;
+}
+
+.card .icon{
+   width: 30px;
+   height: 30px;
+   vertical-align: middle;
+   margin-right: 5px;
+   box-shadow: #333;
+}
+
+.card__inm__especs {
+   font-size: 1.2rem;
+   font-weight: 550;
+
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding-top: 90px; /* evita tapar contenido bajo el header */
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.carousel img {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+
+/* 🔹 Barra lateral fija */
+.filtros {
+    position: sticky; 
+    top: 90px; /* igual al header */
+
+    height: calc(100vh - 90px); /* 🔥 ocupa TODA la pantalla disponible */
+    overflow-y: auto;           /* Si el contenido es grande, hace scroll interno */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    /* 🔥 CENTRADO VERTICAL REAL */
+    gap: 1rem;
+
+    padding: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+}
+
+/* 🔹 Contenido */
+.contenido {
+    padding: 1rem;
+}
+
+/* 🔹 Inputs del filtro */
+.filtros select,
+.filtros input,
+.filtros button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.filtros button {
+    background: var(--primary-color, #ff6600);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 🔹 Para pantallas pequeñas */
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+    .filtros {
+        position: relative;
+        height: auto;
+        top: 0;
+    }
+}
+
+/* 🔹 Contenido */
+.contenido {
+    width: 100%;
+}
+
+/* Elementos del filtro */
+.filtros select,
+.filtros input,
+.filtros button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.filtros button {
+    background: var(--primary-color, #ff6600);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn {
+   display: inline-block;
+   padding: 0.5em 1em;
+   background: var(--primary-color);
+   color: white;
+   text-decoration: none;
+   border-radius: 8px;
+}
+
+.section-nuestros-servicios {
+   width: 100%;
+   max-height: 800px;        /* altura máxima del contenedor */
+   display: flex;
+   flex-wrap: wrap;          /* permite que los hijos salten a columna */
+   justify-content: center;
+   align-items: stretch;     /* hace que los hijos se estiren en vertical */
+   padding: 50px 0;
+   background-color: #f9f9f9;
+   box-sizing: border-box;
+}
+
+.container-servicio {
+   position: relative;
+   flex: 1 1 200px;          /* ancho mínimo de 200px, se ajusta automáticamente */
+   min-width: 200px;
+   height: auto;
+   max-height: 100%;         /* nunca excede la altura del padre */
+   overflow: hidden;
+   text-decoration: none;
+   color: white;
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+   transition: transform 0.3s ease;
+   font-family: "Montserrat";
+}
+
+@media (max-width: 768px) {
+  .container-servicio {
+    max-height: 300px;   /* altura máxima en pantallas pequeñas */
+    height: auto;        /* deja que se ajuste al contenido */
+  }
+
+  .container-servicio img {
+    height: 100%;        /* asegura que la imagen se adapte */
+    object-fit: cover;   /* recorta la imagen si es necesario */
+  }
+}
+
+
+.container-servicio:hover {
+   transform: scale(1.1);
+   filter: brightness(1.5);
+   transition: transform 0.3s ease, filter 0.3s ease;
+   z-index: 10; /* Ensure it stays on top */
+   position: relative; /* Required for z-index to take effect */
+}
+
+.container-servicio:hover .servicio-title {
+   font-size: 1.4rem; /* Slightly larger font size */
+   transition: font-size 0.3s ease;
+}
+
+.container-servicio img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   display: block;
+   filter: brightness(0.6);
+}
+
+.servicio-overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   z-index: 2;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+}
+
+.servicio-title {
+   font-size: 1.2rem;
+   font-weight: bold;
+   padding: 0 1rem;
+}
+/* ESTILOS PAGINA DETALLE INMUEBLE */
+
+.inmueble-info {
+   display: flex;
+   flex-direction: column;
+   align-items: center;      /* centra horizontalmente */
+   justify-content: center;  /* centra verticalmente */
+   padding: 1rem;
+   max-width: 1400px;
+   width: 100%;
+   margin: 0 auto;
+   gap: 1rem;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: stretch;
+    justify-content: center;
+    max-width: 1200px;
+    width: 100%;
+    padding: 1rem;
+    overflow: hidden;
+    align-items: center;
+}
+
+/* 📱 Ajuste para pantallas pequeñas */
+@media (max-width: 900px) {
+    .info-container {
+        flex-direction: column;       /* 👉 Apila galería encima de info */
+        align-items: center;
+        overflow: visible;            /* 👉 Permite expandirse sin recorte */
+    }
+
+    .galeria,
+    .info {
+        max-width: 100% !important;   /* 👉 Ambas ocupan ancho completo */
+        flex: 1 1 100%;
+    }
+
+    .galeria-principal img {
+        max-height: 300px;            /* Evita que la imagen desborde */
+    }
+
+    .galeria-miniaturas img {
+        width: 70px;
+        height: 55px;
+    }
+}
+
+.mapa {
+    width: 90%;
+    height: 400px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    margin: 2rem;
+    overflow: hidden;
+    position: relative;
+    border-radius: 15px; /* asegura la forma del cuadro */
+    clip-path: inset(0 round 15px); /* recorta contenidos que sobresalgan */
+    -webkit-mask-image: linear-gradient(#000, #000);
+    mask-image: linear-gradient(#000, #000);
+    isolation: isolate; /* evita que efectos como filtros/backdrop se salgan */
+}
+
+/* Asegurar que la galería no se expanda más del 100% */
+.galeria {
+    flex: 1 1 60%;
+    max-width: 60%;
+}
+
+/* Asegurar que la imagen principal se ajuste */
+.galeria-principal {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   max-height: 70vh;
+   overflow: hidden;
+   border-radius: 25px;
+   margin-bottom: 1rem;
+   
+}
+
+.galeria-principal img {
+   display: block;
+   max-width: 100%;      /* no excede el ancho del contenedor */
+   max-height: 80vh;     /* no excede la altura visible; ajusta según prefieras (por ejemplo 60vh, 100%, etc.) */
+   width: auto;          /* conserva proporción */
+   height: auto;         /* conserva proporción */
+   margin: 0 auto;
+   object-fit: contain;  /* por si defines ancho/alto fijo; asegura que no se recorte */
+}
+
+/* Miniaturas: evitar que empujen el contenedor */
+.galeria-miniaturas {
+   max-width: 100%;
+   overflow-x: auto;
+   display: flex;
+   gap: 10px;
+   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+   padding: 1%;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: nowrap;
+}
+
+.galeria-miniaturas img {
+   display: block;
+    width: 90px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.galeria-miniaturas img:hover {
+    transform: scale(1.1);
+}
+
+/* INFO */
+.info {
+    flex: 1 1 40%;
+    max-width: 40%;
+}
+
+.info .operacion {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.info p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}   
+
+.info h1 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.precio {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 0.7rem;
+}
+
+.direccion {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+}
+
+/* Especificaciones */
+.especificaciones {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 0.8rem 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.especificaciones div {
+    font-size: 1rem;
+    background: white;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+/* Descripción */
+.info h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Botón WhatsApp */
+.btn-primary {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: background 0.2s ease, transform 0.2s ease;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #c95e0f;
+    transform: scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .inmueble-container {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+    }
+
+    .galeria-principal img {
+        height: 320px;
+    }
+
+    .galeria-miniaturas img {
+        width: 75px;
+        height: 60px;
+    }
+}
+
+.info-secundaria {
+   margin: 1.5rem;
+   min-width: auto;
+    
+}
+
+.pagina-servicio-venta {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   margin: 0 auto;
+}
+.section-subheader {
+   text-align: center;
+   background-color: #ff9000;
+   color: white;
+   padding: 1.5%;
+   width: 100%;
+}
+
+.section-subheader h1 {
+   margin-bottom: 0.5rem;
+   font-size: clamp(1.5rem, 4vw, 3rem);
+   padding: 1%;
+}
+
+.section-subheader P {
+   font-size: clamp(0.9rem, 2vw, 1.2rem);
+   margin-bottom: 0.5rem;
+   font-weight: 550;
+   padding: 1%;
+}
+
+.pagina-servicio-venta{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   gap: 1rem;
+}
+
+.como-funciona {
+   display: flex;
+   flex-direction: column;
+   align-items: start;
+   justify-content: center;
+   width: 100%;
+   padding: 2%;
+   gap: 1rem;
+   max-width: 1200px;
+   padding: 3rem;
+   min-width: 330px;
+   padding-bottom: 5rem;
+}
+
+.pagina-servicio-venta a{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+}
+
+.grid-cards-servicio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.card-servicio {                 
+   border-radius: 20px;
+   overflow: hidden;
+   background: #fff;
+   box-shadow: 0px 6px 12px 4px rgba(0, 0, 0, 0.1);
+   display: flex;
+   flex-direction: column;       
+   font-family: "Montserrat";
+   gap: 1rem;
+   padding: 2rem;
+   width: 100%;
+}
+
+.card-servicio h4 {
+   font-size: 1.4rem;
+   color: #ff9000;
+   padding-bottom: 0.5rem;
+}
+
+.pagina-servicio-venta h3 {
+   font-size: 2rem;
+   font-weight: 500;
+
+}
+
+.comision {
+   background-color: #ffd093;
+   border-radius: 8px;
+   text-align: start;
+   display: flex;
+   flex-direction: row;
+   overflow: hidden;
+   height: 40px;
+   gap: 0px;
+   width: 100%;
+   height: auto;
+   
+}
+
+.text-comision {
+   display: flex;
+   margin-left: 5px;
+   align-items: center;
+   font-size: 0.8rem;
+   padding: 1rem;
+}
+
+
+.marcador-comision {
+   width: 12px;
+   background-color: var(--primary-color);
+}
+
+.documentos-afiliar {
+   display: flex;
+   flex-direction: column;
+   align-items: start;
+   justify-content: center;
+   width: 100%;
+   padding: 2%;
+   gap: 1rem;
+   max-width: 1200px;
+   padding: 3rem;
+   min-width: 330px;
+   padding-bottom: 5rem;
+}
+
+.lista-requerimientos {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   gap: 10px;
+}
+
+.icon-tick {
+   width: 18px;
+   height: 18px;
+   vertical-align: middle;
+   margin-right: 10px;
+}
+
+/* ========= SECCIÓN ========== */
+.qs-section {
+    width: 100%;
+    padding: 3rem 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+/* ========= CONTENEDOR PRINCIPAL ========== */
+.qs-container {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+/* ========= IMAGEN ========== */
+.qs-img-wrapper {
+    flex: 1;
+    display: flex;
+}
+
+.qs-img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+/* ========= TEXTO DERECHA ========== */
+.qs-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.qs-info h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.qs-info p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* ========= BOTÓN ========== */
+.qs-btn {
+    display: inline-block;
+    background: #ff8a00;
+    color: #fff;
+    padding: 0.8rem 1.4rem;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.qs-btn:hover {
+    background: #e27600;
+}
+
+/* ========= MAPA BOGOTÁ ========== */
+.qs-mapa {
+    width: 180px;
+    height: auto;
+    align-self: flex-end;
+    margin-top: 1rem;
+}
+
+/* ========= RESPONSIVE ========== */
+@media (max-width: 900px) {
+    .qs-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .qs-info {
+        align-items: center;
+    }
+
+    .qs-mapa {
+        align-self: center;
+    }
+}
+
+.division-1 {
+   width: 100%;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+   background-color: #444;
+}
+
+
+.division-2 {
+   width: 50%;
+   display: flex;
+   flex-direction: column;
+   background-color: #ff6600;
+}
+
+.paginacion {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0;
+}
+
+.paginacion button {
+    padding: 1rem 2.5rem;
+    border-radius: 999px;
+    border: none;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.paginacion button:hover {
+    opacity: 0.85;
+}

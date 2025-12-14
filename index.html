@@ -1,20 +1,172 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>INDEX</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <header>
-        <h1>INDEX</h1>
-    </header>
+<html>
+    <head>
+         <!-- Metadata -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Resultados Excelentes en el sector inmobiliario">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1">
 
-    <main>
-        <button onclick="location.href='destacados.html'">Ir a Destacados</button>
-        <button onclick="location.href='inmuebles.html'">Ir a Inmuebles</button>
-    </main>
+        <!-- OG Metadata -->
+        <meta property="og:title" content="RE Inmobiliaria SAS">
+        <meta property="og:site_name" content="RE Inmobiliaria SAS">
+        <meta property="og:description" content="Resultados Excelentes en el sector inmobiliario">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="assets/img/reisas-og-img.jpg">
+        <!--<meta property="og:url" content="https://reinmobiliariasas.com/">-->
+        <!--<meta property="fb:app_id" content="775678255785283">-->
 
-</body>
+        <!-- Links  -->
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+        <link rel="stylesheet" type="text/css" href="styles/main.css" />
+        <title>RE Inmobiliaria SAS</title>
+    </head>
+    <body>
+        <header id="main-header-container"></header>
+
+        <!-- Hero Search Section -->
+
+        <div class="cta-section">
+          <div class="overlay">
+            <h1 class="title">Encuentra el hogar de tus sueños</h1>
+            <div class="cta-search">
+
+              <div class="select-group">
+                  <!-- Tipo de Operación -->
+                  <select id="f_operacion" class="search-select">
+                    <option value="0" hidden>Tipo de Gestión</option>
+                  <option value="1">Arriendo</option>
+                  <option value="2">Venta</option>
+                  </select>
+
+                  <!-- Tipo de Inmueble -->
+                  <select id="f_tipo" class="search-select">
+                    <option value="0" hidden>Tipo de Inmueble</option>
+                    <option value="1">Apartamento</option>
+                    <option value="2">Casa</option>
+                    <option value="4">Oficina</option>
+                    <option value="5">Local</option>
+                    <option value="6">Bodega</option>
+                    <option value="7">Lote</option>
+                    <option value="8">Finca</option>
+                    <option value="9">Edificio</option>
+                    <option value="11">Apartaestudio</option>
+                    <option value="22">Casa Residencial</option>
+                  </select>
+              </div>
+            </div>
+
+            <!-- Botón que activa el filtro -->
+            <!-- <div class="container-btn-search"> -->
+            <div >
+              <!-- <button id="btn_buscar" class="search-button">Buscar</button> -->
+              <button id="btn_buscar" class="btn-primary">Buscar</button>
+            </div>
+          </div>
+        </div>
+        <section class="section-inmuebles-destacados">
+          <h2>INMUEBLES DESTACADOS</h2>
+
+          <div class="slider-destacados">
+            <button id="btn_prev" class="slider-btn">&#10094;</button>
+
+            <div class="slider-window">
+              <section id="destacados" class="slider-track">
+                <!-- Tarjetas -->
+              </section>
+            </div>
+
+            <button id="btn_next" class="slider-btn">&#10095;</button>
+          </div>
+        </section>
+
+
+        <section class="section-nuestros-servicios">
+            <a href="pages/venta.html" class="container-servicio">
+              <div class="servicio-overlay">
+                <h3 class="servicio-title">Asesoría en compra y venta</h3>
+              </div>
+              <img src="assets/img/asesoria-inmobiliaria.jpg" alt="Asesoría en compra y venta">
+            </a>
+          
+            <a href="buscar_inmuebles.html" class="container-servicio">
+              <div class="servicio-overlay">
+                <h3 class="servicio-title">Encuentra tu inmueble</h3>
+              </div>
+              <img src="assets/img/arrendamiento.jpg" alt="Arrendamiento">
+            </a>
+          
+            <a href="pages/arriendos.html" class="container-servicio">
+              <div class="servicio-overlay">
+                <h3 class="servicio-title">Administración</h3>
+              </div>
+              <img src="assets/img/administracion.jpg" alt="Administración">
+            </a>
+            <!-- POR APROBAR ESTE SERVICIO
+            <a href="pages/avaluos.html" class="container-servicio">
+              <div class="servicio-overlay">
+                <h3 class="servicio-title">Avalúos</h3>
+              </div>
+              <img src="assets/img/avaluos.jpg" alt="Avalúos">
+            </a>
+            -->
+            <a href="pages/asesorias-juridicas.html" class="container-servicio">
+              <div class="servicio-overlay">
+                <h3 class="servicio-title">Asesorías Jurídicas</h3>
+              </div>
+              <img src="assets/img/juridica.jpg" alt="Asesorías Jurídicas">
+            </a>
+        </section>
+
+        <section class="qs-section" id="info-quienes-somos">
+
+          <div class="qs-container">
+
+            <!-- Imagen izquierda -->
+            <div class="qs-img-wrapper">
+              <img 
+                src="/assets/img/Recurso 12img-quienes-somos-naranja.jpg" 
+                alt="Foto equipo RE Inmobiliaria" 
+                class="qs-img"
+              >
+            </div>
+
+            <!-- Texto derecha -->
+            <div class="qs-info">
+              <h2>¿Quiénes Somos?</h2>
+
+              <p>
+                Nuestro equipo <strong>legal, comercial y administrativo</strong> brinda respaldo y 
+                acompañamiento en cada etapa del proceso, asegurando una gestión 
+                <strong>segura, eficiente y rentable.</strong>
+              </p>
+              <div class="division-1">
+                <div>
+                  <a 
+                    class="btn-primary" 
+                    id="btn-whatsapp" 
+                    href="https://wa.me/573213770000?text=Hola%20me%20gustaria%20hablar%20con%20un%20asesor">
+                    Habla con un asesor ahora!
+                  </a>
+
+                  <p>Operamos en Bogotá y sus alrededores.</p>
+                  <p> <strong>conectando tu propiedad con los principales portales y canales digitales.</strong> </p>
+                </div>
+
+                <div class="division-2">
+                  <img src="/assets/img/ubicacion-bogota 1" alt="Mapa de Bogotá" class="qs-mapa">
+                </div>
+              
+
+            </div>
+
+          </div>
+
+        </section>
+
+      <script id="site" type="module" src="dist/main.js"></script>
+      <script type="module" src="dist/destacados.js" ></script>
+      <script type="module" src="dist/carousel.js"></script>
+      <script type="module" src="dist/index_busqueda.js"></script>
+
+    </body>
 </html>

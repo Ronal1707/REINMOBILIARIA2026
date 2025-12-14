@@ -1,0 +1,76 @@
+<html>
+    <head>
+         <!-- Metadata -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Resultados Excelentes en el sector inmobiliario">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1">
+
+        <!-- OG Metadata -->
+        <meta property="og:title" content="RE Inmobiliaria SAS">
+        <meta property="og:site_name" content="RE Inmobiliaria SAS">
+        <meta property="og:description" content="Resultados Excelentes en el sector inmobiliario">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="assets/img/reisas-og-img.jpg">
+        <!--<meta property="og:url" content="https://reinmobiliariasas.com/">-->
+        <!--<meta property="fb:app_id" content="775678255785283">-->
+
+        <!-- Links  -->
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+    <title>detalle inmueble</title>
+</head>
+
+<body>
+    <section class="inmueble-info">
+        <div class="info-container">
+            
+            <!-- Galería -->
+            <section class="galeria">
+                <div class="galeria-principal">
+                    <img id="imagen-principal" src="" alt="Imagen del inmueble">
+                </div>
+
+                <div class="galeria-miniaturas" id="miniaturas"></div>
+            </section>
+
+            <!-- Información del inmueble -->
+            <section class="info">
+                <h1 id="titulo"></h1>
+                <h3 id="operacion" class="operacion"></h3>
+                <p class="precio" id="precio"></p>
+
+                <div class="especificaciones" id="especificaciones"></div>
+
+                <a class="btn-primary" id="btn-whatsapp" target="_blank">
+                    Contactar por WhatsApp
+                </a>
+            </section>
+
+        </div>
+
+        <section class="info-secundaria" id="">
+            <h3>Descripción</h3>
+            <p id="descripcion"></p>
+        </section>
+
+        <h3>Detalles del inmueble</h3>
+        <div id="detalles"></div>
+
+        <h3>Comodidades</h3>
+        <ul id="comodidades"></ul>
+
+
+        <section class="mapa" id="mapa">
+            
+        </section>
+    </section>
+
+
+   
+    
+    <script type="module" src="dist/api.js"></script>
+    <script type="module" src="dist/inmueble.js"></script>
+
+</body>
+</html>
