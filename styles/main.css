@@ -290,6 +290,17 @@ h2 {
    box-shadow: 0px 0px 15px 3px rgba(19, 17, 15, 0.2);
    display: flex;
    flex-direction: column;
+   opacity: 0;
+   transform: translateY(20px);
+   animation: fadeUp 0.4s ease forwards;
+}
+
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media (max-width: 768px) {
@@ -396,82 +407,76 @@ h2 {
   flex-shrink: 0;
 }
 
-
 /* 🔹 Barra lateral fija */
 .filtros {
-    position: sticky; 
-    top: 90px; /* igual al header */
+   position: sticky; 
+   top: 90px; /* igual al header */
+   overflow-y: auto;           /* Si el contenido es grande, hace scroll interno */
 
-    height: calc(100vh - 90px); /* 🔥 ocupa TODA la pantalla disponible */
-    overflow-y: auto;           /* Si el contenido es grande, hace scroll interno */
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start; /* Cambiado a flex-start para ajustar la altura */
+   gap: 1rem;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;    /* 🔥 CENTRADO VERTICAL REAL */
-    gap: 1rem;
-
-    padding: 2rem;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+   padding: 2rem;
+   margin: 10%;
+   background: #ffffff;
+   border-radius: 12px;
+   box-shadow: 0 0 15px rgba(0,0,0,0.15);
+   z-index: 1000; /* Asegura que la barra lateral esté en la primera capa */
+   height: calc(100vh - 90px); /* Ajusta según la altura de tu header */
 }
 
 /* 🔹 Contenido */
 .contenido {
-    padding: 1rem;
+   padding: 1rem;
+   height: auto;
 }
 
 /* 🔹 Inputs del filtro */
 .filtros select,
 .filtros input,
 .filtros button {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-.filtros button {
-    background: var(--primary-color, #ff6600);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+   width: 100%;
+   padding: 12px;
+   font-size: 1rem;
+   border-radius: 8px;
+   border: 1px solid #ccc;
+   height: auto;
 }
 
 /* 🔹 Para pantallas pequeñas */
 @media (max-width: 900px) {
-    .layout {
-        grid-template-columns: 1fr;
-    }
-    .filtros {
-        position: relative;
-        height: auto;
-        top: 0;
-    }
+   .layout {
+      grid-template-columns: 1fr;
+   }
+   .filtros {
+      position: relative;
+      top: 0;
+   }
 }
 
 /* 🔹 Contenido */
 .contenido {
-    width: 100%;
+   width: 100%;
 }
 
 /* Elementos del filtro */
 .filtros select,
 .filtros input,
 .filtros button {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+   width: 100%;
+   padding: 10px;
+   font-size: 1rem;
+   border-radius: 8px;
+   border: 1px solid #ccc;
 }
 
 .filtros button {
-    background: var(--primary-color, #ff6600);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+   background: var(--primary-color, #ff6600);
+   color: white;
+   font-weight: bold;
+   cursor: pointer;
 }
 
 .btn {
@@ -974,6 +979,7 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+    height: auto;
 }
 
 .qs-info h2 {
@@ -1031,16 +1037,19 @@ h2 {
    display: flex;
    flex-direction: row;
    align-items: center;
-   justify-content: space-between;
-   background-color: #444;
+   justify-content: start;
 }
 
+.division-1 a{
+   margin: 1%;
+   
 
+}
 .division-2 {
    width: 50%;
    display: flex;
    flex-direction: column;
-   background-color: #ff6600;
+
 }
 
 .paginacion {

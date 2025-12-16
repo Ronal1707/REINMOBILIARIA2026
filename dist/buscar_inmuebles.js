@@ -7,7 +7,7 @@ const estado = document.getElementById("estado_api");
 const btn = document.getElementById("btn_filtrar");
 
 let cantidadActual = 12;
-const INCREMENTO = 12;
+const INCREMENTO = 5;
 let totalInmuebles = 0;
 
 function renderCargarMas() {
@@ -18,14 +18,25 @@ function renderCargarMas() {
 
     const btn = document.createElement("button");
     btn.textContent = "Cargar más";
+    btn.classList.add("btn-cargar-mas");
 
-    btn.onclick = () => {
+    btn.onclick = async () => {
+        btn.textContent = "Cargando inmuebles...";
+        btn.disabled = true;
+
+        estado.textContent = "⏳ Cargando más inmuebles...";
+        estado.style.color = "#555";
+
         cantidadActual += INCREMENTO;
-        cargarInmuebles();
+        await cargarInmuebles();
+
+        btn.disabled = false;
+        btn.textContent = "Cargar más";
     };
 
     pag.appendChild(btn);
 }
+
 
 async function cargarInmuebles(reset = false) {
     console.group("🔄 cargarInmuebles");
