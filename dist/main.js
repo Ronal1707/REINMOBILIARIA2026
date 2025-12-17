@@ -1,55 +1,102 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-const scrollThreshold = 50; // px scrolled before shrinking
+
+const scrollThreshold = 50;
+
 window.addEventListener("DOMContentLoaded", loadMainHeader);
-function getRelativeRoot() {
-    const segments = window.location.pathname.split('/').filter(Boolean);
-    const depth = Math.max(0, segments.length - 1);
-    return "../".repeat(depth);
+
+/* =========================
+   CARGAR HEADER
+========================= */
+async function loadMainHeader() {
+    const container = document.getElementById("main-header-container");
+    if (!container) return;
+
+    try {
+        const res = await fetch("component/main-header.html");
+        if (!res.ok) throw new Error("No se pudo cargar el header");
+
+        container.innerHTML = await res.text();
+
+        configurarHeader(); // 🔥 activar interacciones
+        ajustarLinksHeader();
+
+    } catch (err) {
+        console.error(err);
+    }
 }
-function loadMainHeader() {
-    return __awaiter(this, void 0, void 0, function* () {
-        let mainHeaderContainer = document.getElementById("main-header-container");
-        if (!mainHeaderContainer) {
-            console.error("Main header element not found.");
-            return;
-        }
-        try {
-            const res = yield fetch("component/main-header.html");
-            if (!res.ok) {
-                console.error("Failed to load header:", res.status, res.statusText);
-                return;
-            }
-            mainHeaderContainer.innerHTML = yield res.text();
-            const header = mainHeaderContainer.querySelector("#main-header");
-            if (getRelativeRoot() != "") {
-                header.classList.remove("index");
-            }
-            const logoLink = header.querySelector("a.logo");
-            logoLink.href = getRelativeRoot() + "index.html";
-        }
-        catch (error) {
-            console.error("Error loading main header:", error);
+
+/* =========================
+   LOGICA HEADER
+========================= */
+function configurarHeader() {
+    const header = document.getElementById("main-header");
+    const hamburger = header.querySelector("#hamburger");
+    const nav = header.querySelector("#nav");
+    const dropdownToggles = header.querySelectorAll(".dropdown-toggle");
+
+    if (!hamburger || !nav) return;
+
+    /* HAMBURGER */
+    hamburger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        nav.classList.toggle("open");
+        hamburger.classList.toggle("active");
+        document.body.style.overflow =
+            nav.classList.contains("open") ? "hidden" : "";
+    });
+
+    /* DROPDOWN SOLO CLICK / TAP */
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const dropdown = toggle.closest(".dropdown");
+
+            document.querySelectorAll(".dropdown.open")
+                .forEach(d => d !== dropdown && d.classList.remove("open"));
+
+            dropdown.classList.toggle("open");
+        });
+    });
+
+    /* CERRAR AL CLIC FUERA */
+    document.addEventListener("click", () => {
+        document.querySelectorAll(".dropdown.open")
+            .forEach(d => d.classList.remove("open"));
+
+        if (nav.classList.contains("open")) {
+            nav.classList.remove("open");
+            hamburger.classList.remove("active");
+            document.body.style.overflow = "";
         }
     });
+
+    nav.addEventListener("click", e => e.stopPropagation());
 }
-;
-window.addEventListener('scroll', () => {
-    let mainHeaderElement = document.getElementById("main-header");
-    if (!mainHeaderElement)
-        return;
-    if (window.scrollY > scrollThreshold) {
-        mainHeaderElement.classList.remove('unscrolled');
-    }
-    else {
-        mainHeaderElement.classList.add('unscrolled');
-    }
+
+/* =========================
+   AJUSTAR LINKS RELATIVOS
+========================= */
+function ajustarLinksHeader() {
+    const header = document.getElementById("main-header");
+    if (!header) return;
+
+    const root = getRelativeRoot();
+    const logo = header.querySelector(".logo");
+
+    if (logo) logo.href = root + "index.html";
+}
+
+function getRelativeRoot() {
+    const segments = window.location.pathname.split("/").filter(Boolean);
+    return "../".repeat(Math.max(0, segments.length - 1));
+}
+
+/* =========================
+   SCROLL HEADER
+========================= */
+window.addEventListener("scroll", () => {
+    const header = document.getElementById("main-header");
+    if (!header) return;
+
+    header.classList.toggle("unscrolled", window.scrollY <= scrollThreshold);
 });
