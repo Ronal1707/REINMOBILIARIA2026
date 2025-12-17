@@ -32,6 +32,23 @@
     height: 36px;
 }
 
+/* Desktop */
+.logo-mobile {
+    display: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .logo-desktop {
+        display: none;
+    }
+
+    .logo-mobile {
+        display: block;
+        height: 34px;
+    }
+}
+
 /* =====================================================
    ACTIONS
 ===================================================== */
