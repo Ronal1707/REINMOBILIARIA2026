@@ -22,13 +22,20 @@
 </head>
 
 <body>
+
+    <header id="main-header-container"></header>
+
     <section class="inmueble-info">
         <div class="info-container">
             
             <!-- Galería -->
             <section class="galeria">
                 <div class="galeria-principal">
+                    <button class="galeria-btn prev" aria-label="Imagen anterior">❮</button>
+
                     <img id="imagen-principal" src="" alt="Imagen del inmueble">
+
+                    <button class="galeria-btn next" aria-label="Imagen siguiente">❯</button>
                 </div>
 
                 <div class="galeria-miniaturas" id="miniaturas"></div>
@@ -61,7 +68,7 @@
 
 
    
-    
+    <script id="site" type="module" src="dist/main.js"></script>
     <script type="module" src="dist/api.js"></script>
     <script type="module" src="dist/inmueble.js"></script>
 

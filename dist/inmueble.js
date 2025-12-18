@@ -180,21 +180,110 @@ async function cargarInmueble(codigo) {
 function cargarImagenes(data) {
     const principal = document.getElementById("imagen-principal");
     const miniaturas = document.getElementById("miniaturas");
+    const btnPrev = document.querySelector(".galeria-btn.prev");
+    const btnNext = document.querySelector(".galeria-btn.next");
 
     if (!data.fotos || data.fotos.length === 0) {
         principal.src = "assets/img/no-image.jpg";
         return;
     }
 
-    principal.src = data.fotos[0].foto;
+    const fotos = data.fotos.map(f => f.foto);
+    let indiceActual = 0;
+    let thumbs = [];
 
-    data.fotos.forEach(f => {
-        const img = document.createElement("img");
-        img.src = f.foto;
-        img.addEventListener("click", () => {
-            principal.src = f.foto;
+    const actualizarActiva = () => {
+        thumbs.forEach((img, i) => {
+            img.classList.toggle("activa", i === indiceActual);
         });
+
+        const activa = thumbs[indiceActual];
+        if (activa) centrarMiniatura(activa);
+    };
+
+    const cambiarImagen = (nuevoIndice, direccion = 1) => {
+        if (nuevoIndice === indiceActual) return;
+
+        const imgOld = document.createElement("img");
+        imgOld.src = fotos[indiceActual];
+        imgOld.className = "img-old";
+
+        const imgNew = document.createElement("img");
+        imgNew.src = fotos[nuevoIndice];
+        imgNew.className = "img-anim";
+
+        imgNew.style.transform = `translateX(${direccion * 100}%)`;
+        imgNew.style.opacity = "1";
+
+        principal.parentElement.append(imgOld, imgNew);
+
+        requestAnimationFrame(() => {
+            imgOld.style.opacity = "0";
+            imgOld.style.filter = "blur(100px)";
+            imgOld.style.transform = `translateX(${-direccion * 40}px)`;
+
+            imgNew.style.transform = "translateX(0)";
+        });
+
+        setTimeout(() => {
+            principal.src = fotos[nuevoIndice];
+            imgOld.remove();
+            imgNew.remove();
+
+            indiceActual = nuevoIndice;
+            actualizarActiva();
+        }, 450);
+    };
+
+    // Imagen inicial
+    principal.src = fotos[indiceActual];
+
+    // Miniaturas
+    fotos.forEach((src, index) => {
+        const img = document.createElement("img");
+        img.src = src;
+
+        img.addEventListener("click", () => {
+            const dir = index > indiceActual ? 1 : -1;
+            cambiarImagen(index, dir);
+        });
+
         miniaturas.appendChild(img);
+        thumbs.push(img);
+    });
+
+    actualizarActiva();
+
+    // Botones
+    btnPrev.addEventListener("click", () => {
+        const nuevo = (indiceActual - 1 + fotos.length) % fotos.length;
+        cambiarImagen(nuevo, -1);
+    });
+
+    btnNext.addEventListener("click", () => {
+        const nuevo = (indiceActual + 1) % fotos.length;
+        cambiarImagen(nuevo, 1);
+    });
+
+    // Centrar miniatura inicial
+    setTimeout(() => actualizarActiva(), 150);
+}
+
+
+function centrarMiniatura(img) {
+    const contenedor = img.parentElement;
+
+    const contenedorRect = contenedor.getBoundingClientRect();
+    const imgRect = img.getBoundingClientRect();
+
+    const desplazamiento =
+        imgRect.left - contenedorRect.left
+        - (contenedorRect.width / 2)
+        + (imgRect.width / 2);
+
+    contenedor.scrollBy({
+        left: desplazamiento,
+        behavior: "smooth"
     });
 }
 

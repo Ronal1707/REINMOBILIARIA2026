@@ -566,56 +566,149 @@ h2 {
    font-weight: bold;
    padding: 0 1rem;
 }
-/* ESTILOS PAGINA DETALLE INMUEBLE */
+/* ==========================================================
+   ESTILOS PAGINA DETALLE INMUEBLE – GALERÍA CORREGIDA
+========================================================== */
 
 .inmueble-info {
    display: flex;
    flex-direction: column;
-   align-items: center;      /* centra horizontalmente */
-   justify-content: center;  /* centra verticalmente */
+   align-items: center;
+   justify-content: center;
    padding: 1rem;
    max-width: 1400px;
    width: 100%;
-   margin: 0 auto;
+   margin: 70px auto 0;
    gap: 1rem;
 }
 
 .info-container {
     display: flex;
-    flex-direction: row;
     gap: 2rem;
-    align-items: stretch;
     justify-content: center;
     max-width: 1200px;
     width: 100%;
     padding: 1rem;
-    overflow: hidden;
     align-items: center;
 }
 
-/* 📱 Ajuste para pantallas pequeñas */
-@media (max-width: 900px) {
-    .info-container {
-        flex-direction: column;       /* 👉 Apila galería encima de info */
-        align-items: center;
-        overflow: visible;            /* 👉 Permite expandirse sin recorte */
-    }
+/* =========================
+   GALERÍA
+========================= */
 
-    .galeria,
-    .info {
-        max-width: 100% !important;   /* 👉 Ambas ocupan ancho completo */
-        flex: 1 1 100%;
-    }
-
-    .galeria-principal img {
-        max-height: 300px;            /* Evita que la imagen desborde */
-    }
-
-    .galeria-miniaturas img {
-        width: 70px;
-        height: 55px;
-    }
+.galeria {
+    flex: 1 1 60%;
+    max-width: 60%;
 }
+
+/* Contenedor imagen grande */
+.galeria-principal {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    overflow: hidden;
+    border-radius: 25px;
+    margin-bottom: 1rem;
+}
+
+/* Imagen final (NO se anima) */
+#imagen-principal {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Imágenes temporales para slide + fade */
+/* Imagen saliente */
+.img-old {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateX(0);
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.45s ease,
+        filter 0.45s ease;
+
+    z-index: 1;
+}
+
+/* Imagen entrante */
+.img-anim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    opacity: 1;
+    z-index: 2;
+
+    transition: transform 0.45s ease;
+}
+
+/* Botones izquierda / derecha */
+.galeria-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    border: none;
+    font-size: 22px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.galeria-btn.prev { left: 10px; }
+.galeria-btn.next { right: 10px; }
+
+.galeria-btn:hover {
+    background: var(--primary-color);
+}
+
+/* Miniaturas */
+.galeria-miniaturas {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    overflow-x: auto;
+}
+
+.galeria-miniaturas img {
+    width: 90px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    opacity: 0.6;
+    border: 2px solid transparent;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.galeria-miniaturas img:hover {
+    opacity: 1;
+}
+
+.galeria-miniaturas img.activa {
+    opacity: 1;
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* =========================
+   MAPA
+========================= */
 
 .mapa {
     width: 90%;
@@ -624,69 +717,34 @@ h2 {
     margin: 2rem;
     overflow: hidden;
     position: relative;
-    border-radius: 15px; /* asegura la forma del cuadro */
-    clip-path: inset(0 round 15px); /* recorta contenidos que sobresalgan */
-    -webkit-mask-image: linear-gradient(#000, #000);
-    mask-image: linear-gradient(#000, #000);
-    isolation: isolate; /* evita que efectos como filtros/backdrop se salgan */
+    border-radius: 15px;
+    isolation: isolate;
 }
 
-/* Asegurar que la galería no se expanda más del 100% */
-.galeria {
-    flex: 1 1 60%;
-    max-width: 60%;
-}
+/* =========================
+   RESPONSIVE
+========================= */
 
-/* Asegurar que la imagen principal se ajuste */
-.galeria-principal {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   width: 100%;
-   max-height: 70vh;
-   overflow: hidden;
-   border-radius: 25px;
-   margin-bottom: 1rem;
-   
-}
+@media (max-width: 900px) {
+    .info-container {
+        flex-direction: column;
+    }
 
-.galeria-principal img {
-   display: block;
-   max-width: 100%;      /* no excede el ancho del contenedor */
-   max-height: 80vh;     /* no excede la altura visible; ajusta según prefieras (por ejemplo 60vh, 100%, etc.) */
-   width: auto;          /* conserva proporción */
-   height: auto;         /* conserva proporción */
-   margin: 0 auto;
-   object-fit: contain;  /* por si defines ancho/alto fijo; asegura que no se recorte */
-}
+    .galeria,
+    .info {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
 
-/* Miniaturas: evitar que empujen el contenedor */
-.galeria-miniaturas {
-   max-width: 100%;
-   overflow-x: auto;
-   display: flex;
-   gap: 10px;
-   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-   padding: 1%;
-   justify-content: center;
-   align-items: center;
-   flex-wrap: nowrap;
-}
+    .galeria-principal {
+        height: 300px;
+    }
 
-.galeria-miniaturas img {
-   display: block;
-    width: 90px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+    .galeria-miniaturas img {
+        width: 70px;
+        height: 55px;
+    }
 }
-
-.galeria-miniaturas img:hover {
-    transform: scale(1.1);
-}
-
 /* INFO */
 .info {
     flex: 1 1 40%;
