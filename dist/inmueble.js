@@ -308,15 +308,6 @@ function cargarEspecificaciones(data) {
         specs.appendChild(div);
     });
 
-        // ----------------------------
-    // DETALLES DEL INMUEBLE
-    // ----------------------------
-    cargarDetalles(data);
-
-    // ----------------------------
-    // COMODIDADES
-    // ----------------------------
-    cargarComodidades(data);
 }
 
 
