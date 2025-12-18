@@ -51,7 +51,7 @@ export function crearCard(inmueble) {
           <div class="container__specs">
             <p class="card__inm__especs">${specs.trim()}</p>
           </div>
-          <a href="inmueble.html?codigo=${inmueble.Codigo_Inmueble}" class="btn btn--primary">Ver más</a>
+          <a href="inmueble.html?codigo=${inmueble.Codigo_Inmueble}" class="btn-primary">Ver más</a>
         </div>
 
       </div>
