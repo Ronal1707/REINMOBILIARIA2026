@@ -120,7 +120,7 @@
                 <h3 class="servicio-title">Asesorías Jurídicas</h3>
               </div>
               <img src="assets/img/juridica.jpg" alt="Asesorías Jurídicas">
-            </a>-->
+            </a>
         </section>
 
         <section class="qs-section" id="info-quienes-somos">
@@ -173,55 +173,6 @@
       <script type="module" src="dist/destacados.js" ></script>
       <script type="module" src="dist/carousel.js"></script>
       <script type="module" src="dist/index_busqueda.js"></script>
-
-    <!-- POP UP IMAGEN -->
-    <div id="popup" style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    ">
-      <div style="position: relative;">
-        <img src="/assets/img/popup-pre.jpg" alt="Aviso" style="
-          max-width: 90vw;
-          max-height: 90vh;
-          border-radius: 12px;
-        ">
-        <button onclick="cerrarPopup()" style="
-          position: absolute;
-          top: -10px;
-          right: -10px;
-          background: #e56d11;
-          color: #fff;
-          border: none;
-          border-radius: 50%;
-          width: 30px;
-          height: 30px;
-          cursor: pointer;
-          font-size: 16px;
-        ">✕</button>
-      </div>
-    </div>
-
-    <script>
-      window.onload = function() {
-        if (!localStorage.getItem("popupImagenVisto")) {
-          document.getElementById("popup").style.display = "flex";
-        }
-      };
-
-      function cerrarPopup() {
-        document.getElementById("popup").style.display = "none";
-        localStorage.setItem("popupImagenVisto", "true");
-      }
-    </script>
-
 
     </body>
 </html>
