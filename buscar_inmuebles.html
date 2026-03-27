@@ -1,100 +1,268 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-     <!-- Metadata -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="Resultados Excelentes en el sector inmobiliario">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description"
+        content="Busca apartamentos, casas, oficinas y más en Bogotá y Mosquera. Arriendo y venta con RE Inmobiliaria SAS.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 
-        <!-- OG Metadata -->
-        <meta property="og:title" content="RE Inmobiliaria SAS">
-        <meta property="og:site_name" content="RE Inmobiliaria SAS">
-        <meta property="og:description" content="Resultados Excelentes en el sector inmobiliario">
-        <meta property="og:type" content="website">
-        <meta property="og:image" content="assets/img/reisas-og-img.jpg">
-        <!--<meta property="og:url" content="https://reinmobiliariasas.com/">-->
-        <!--<meta property="fb:app_id" content="775678255785283">-->
+    <meta property="og:title" content="Buscar Inmuebles — RE Inmobiliaria SAS">
+    <meta property="og:site_name" content="RE Inmobiliaria SAS">
+    <meta property="og:description"
+        content="Encuentra tu inmueble ideal en Bogotá y Mosquera. Arriendo y venta con respaldo profesional.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/img/reisas-og-img.jpg">
 
-        <!-- Links  -->
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
     <link rel="stylesheet" type="text/css" href="styles/main.css" />
-    <title>Buscar Inmuebles</title>
+    <link rel="stylesheet" href="styles/footer.css">
+    <title>Buscar Inmuebles — RE Inmobiliaria SAS</title>
+    <link rel="stylesheet" href="styles/buscar_inmuebles.css">
 </head>
+
 <body>
     <header id="main-header-container"></header>
-    <!-- <h1>Buscar Inmuebles</h1>
-    <p>Bienvenido a la página de búsqueda de inmuebles.</p> -->
-    <!-- <p id="estado_api" style="font-weight: bold;"></p> -->
 
-    <div class="layout">
-        
-        <!-- 🔹 Columna izquierda: Filtros -->
-        <aside class="filtros">
-            <h3>Filtros</h3>
+    <!-- Header de búsqueda -->
+    <div class="buscar-header">
+        <h1>Encuentra tu inmueble ideal</h1>
+        <p>Bogotá y alrededores · Arriendo y venta con respaldo profesional</p>
+    </div>
 
-            <!-- <select id="f_ciudad">
-                <option value="0" hidden>Ciudad</option>
-                <option value="101">Bogotá</option>
-                <option value="102">Medellín</option>
-            </select> -->
+    <!-- Botón filtros móvil -->
+    <button class="filtros-toggle" id="filtros-toggle">
+        &nbsp;Filtrar inmuebles
+    </button>
 
-            <select id="f_tipo">
-                <option value="0" hidden>Tipo</option>
-                <option value="1">Apartamento</option>
-                <option value="2">Casa</option>
-                <option value="4">Oficina</option>
-                <option value="5">Local</option>
-                <option value="6">Bodega</option>
-                <option value="7">Lote</option>
-                <option value="8">Finca</option>
-                <option value="9">Edificio</option>
-                <option value="11">Apartaestudio</option>
-                <option value="22">Casa Residencial</option>
-            </select>
+    <div class="buscar-layout">
 
-            <select id="f_operacion">
-                <option value="0">Operación</option>
-                <option value="1">Arriendo</option>
-                <option value="5">Venta</option>
-            </select>
+        <!-- ═══ PANEL DE FILTROS ═══ -->
+        <aside class="filtros-panel" id="filtros-panel">
 
-            <!-- HABITACIONES -->
-            <label for="f_habitaciones">
-            Habitaciones: <span id="hab_val">0</span>
-            </label>
-            <input id="f_habitaciones" type="range" min="0" max="10" value="0">
+            <div class="filtros-title">Filtros de búsqueda</div>
 
-            <!-- BAÑOS -->
-            <label for="f_banos">
-            Baños: <span id="ban_val">0</span>
-            </label>
-            <input id="f_banos" type="range" min="0" max="10" value="0">
+            <!-- Tipo de inmueble -->
+            <div class="filtro-grupo">
+                <span class="filtro-label">Tipo de inmueble</span>
+                <select id="f_tipo" class="filtro-select">
+                    <option value="0">Todos los tipos</option>
+                    <option value="1">Apartamento</option>
+                    <option value="2">Casa</option>
+                    <option value="4">Oficina</option>
+                    <option value="5">Local</option>
+                    <option value="6">Bodega</option>
+                    <option value="7">Lote</option>
+                    <option value="8">Finca</option>
+                    <option value="9">Edificio</option>
+                    <option value="11">Apartaestudio</option>
+                    <option value="22">Casa Residencial</option>
+                </select>
+            </div>
 
-            <input id="f_min" type="number" placeholder="Precio mínimo">
-            <input id="f_max" type="number" placeholder="Precio máximo">
+            <!-- Operación -->
+            <div class="filtro-grupo">
+                <span class="filtro-label">Operación</span>
+                <select id="f_operacion" class="filtro-select">
+                    <option value="0">Arriendo y venta</option>
+                    <option value="1">Arriendo</option>
+                    <option value="5">Venta</option>
+                </select>
+            </div>
 
-            <button class="btn-primary" id="btn_filtrar">Buscar</button>
-            <button class="btn-primary" id="btn_reset">Restablecer</button>
+            <!-- Habitaciones -->
+            <div class="filtro-grupo">
+                <div class="slider-wrapper">
+                    <div class="slider-header">
+                        <span class="filtro-label">Habitaciones</span>
+                        <span class="slider-val" id="hab_val">0</span>
+                    </div>
+                    <input id="f_habitaciones" type="range" min="0" max="10" value="0" class="filtro-slider">
+                </div>
+            </div>
+
+            <!-- Baños -->
+            <div class="filtro-grupo">
+                <div class="slider-wrapper">
+                    <div class="slider-header">
+                        <span class="filtro-label">Baños</span>
+                        <span class="slider-val" id="ban_val">0</span>
+                    </div>
+                    <input id="f_banos" type="range" min="0" max="10" value="0" class="filtro-slider">
+                </div>
+            </div>
+
+            <!-- Precio -->
+            <div class="filtro-grupo">
+                <span class="filtro-label">Rango de precio (COP)</span>
+                <div class="precio-grupo">
+                    <input id="f_min" type="number" placeholder="Mínimo" class="filtro-input">
+                    <input id="f_max" type="number" placeholder="Máximo" class="filtro-input">
+                </div>
+            </div>
+
+            <button class="btn-filtrar" id="btn_filtrar">Buscar inmuebles</button>
+            <button class="btn-reset-filtros" id="btn_reset">↺ Restablecer filtros</button>
 
         </aside>
 
-        <!-- 🔹 Columna derecha: contenido -->
-        <main class="contenido">
-            <h1>Buscar Inmuebles</h1>
-            <p id="estado_api" style="font-weight: bold;"></p>
+        <!-- ═══ CONTENIDO ═══ -->
+        <main class="buscar-contenido">
 
-            <section id="buscar_inmuebles" class="grid-cards"></section>
-            <div id="paginacion" class="paginacion"></div>
+            <div class="resultados-bar">
+                <h2>Inmuebles disponibles</h2>
+                <div class="resultados-bar-right">
+                    <span id="estado_api"></span>
+                    <select id="f_ordenar" class="sort-select">
+                        <option value="">Ordenar por...</option>
+                        <option value="precio_asc">Precio: menor a mayor</option>
+                        <option value="precio_desc">Precio: mayor a menor</option>
+                        <option value="area_desc">Mayor área</option>
+                        <option value="area_asc">Menor área</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Skeleton loading inicial -->
+            <div id="skeleton-loading" class="skeleton-grid">
+                <div class="skeleton-card">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-line price"></div>
+                        <div class="skeleton-line medium"></div>
+                        <div class="skeleton-line long"></div>
+                        <div class="skeleton-line short"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-line price"></div>
+                        <div class="skeleton-line medium"></div>
+                        <div class="skeleton-line long"></div>
+                        <div class="skeleton-line short"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-line price"></div>
+                        <div class="skeleton-line medium"></div>
+                        <div class="skeleton-line long"></div>
+                        <div class="skeleton-line short"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-line price"></div>
+                        <div class="skeleton-line medium"></div>
+                        <div class="skeleton-line long"></div>
+                        <div class="skeleton-line short"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-line price"></div>
+                        <div class="skeleton-line medium"></div>
+                        <div class="skeleton-line long"></div>
+                        <div class="skeleton-line short"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-line price"></div>
+                        <div class="skeleton-line medium"></div>
+                        <div class="skeleton-line long"></div>
+                        <div class="skeleton-line short"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cards container — manejado por buscar_inmuebles.js -->
+            <section id="buscar_inmuebles" class="cards-grid" style="display:none;"></section>
+
+            <div id="paginacion"></div>
+
         </main>
     </div>
 
     <div id="footer-container"></div>
 
-
     <script src="dist/footer.js"></script>
     <script type="module" src="dist/buscar_inmuebles.js"></script>
     <script type="module" src="dist/bedroomsBathrooms.js"></script>
     <script type="module" src="dist/main.js"></script>
+    <script type="module" src="dist/filtros.js"></script>
+
+    <script>
+        // ── Filtros toggle móvil ──
+        const toggleBtn = document.getElementById('filtros-toggle');
+        const filtrosPanel = document.getElementById('filtros-panel');
+
+        toggleBtn.addEventListener('click', () => {
+            filtrosPanel.classList.toggle('open');
+            toggleBtn.textContent = filtrosPanel.classList.contains('open')
+                ? '✕  Cerrar filtros'
+                : '🔍  Filtrar inmuebles';
+        });
+
+        // ── Ocultar skeleton cuando el contenedor tenga cards ──
+        const skeleton = document.getElementById('skeleton-loading');
+        const cardsSection = document.getElementById('buscar_inmuebles');
+
+        const skeletonObserver = new MutationObserver(() => {
+            if (cardsSection.innerHTML.trim().length > 0) {
+                skeleton.style.display = 'none';
+                cardsSection.style.display = 'grid';
+                skeletonObserver.disconnect();
+            }
+        });
+
+        skeletonObserver.observe(cardsSection, { childList: true });
+
+        // ── Ordenar cards ──
+        document.getElementById('f_ordenar').addEventListener('change', function () {
+            const criterio = this.value;
+            if (!criterio) return;
+
+            const cards = Array.from(cardsSection.querySelectorAll('.card'));
+            if (cards.length === 0) return;
+
+            const getPrecio = (card) => {
+                const txt = card.querySelector('.card__price')?.textContent || '0';
+                return parseFloat(txt.replace(/[^0-9]/g, '')) || 0;
+            };
+
+            const getArea = (card) => {
+                // AreaConstruida aparece como tercer spec (después de alcobas y baños)
+                const specs = card.querySelector('.card__inm__especs')?.textContent || '';
+                const match = specs.match(/(\d+(?:\.\d+)?)\s*(?:m²|m2)?/g);
+                // Toma el último número que suele ser el área
+                if (match && match.length > 0) {
+                    const ultimo = match[match.length - 1];
+                    return parseFloat(ultimo.replace(/[^0-9.]/g, '')) || 0;
+                }
+                return 0;
+            };
+
+            cards.sort((a, b) => {
+                switch (criterio) {
+                    case 'precio_asc': return getPrecio(a) - getPrecio(b);
+                    case 'precio_desc': return getPrecio(b) - getPrecio(a);
+                    case 'area_desc': return getArea(b) - getArea(a);
+                    case 'area_asc': return getArea(a) - getArea(b);
+                    default: return 0;
+                }
+            });
+
+            // Re-insertar en el DOM ordenadas
+            cards.forEach(card => cardsSection.appendChild(card));
+        });
+    </script>
 </body>
+
 </html>
