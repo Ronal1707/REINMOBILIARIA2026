@@ -7,3 +7,8 @@ dist/
 # Sistema
 .DS_Store
 .env
+Thumbs.db
+
+# Archivos pesados / datos
+*.zip
+*.xlsx
