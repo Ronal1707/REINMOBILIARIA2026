@@ -1,77 +1,475 @@
-<html>
-    <head>
-         <!-- Metadata -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="Resultados Excelentes en el sector inmobiliario">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1">
+<!DOCTYPE html>
+<html lang="es">
 
-        <!-- OG Metadata -->
-        <meta property="og:title" content="RE Inmobiliaria SAS">
-        <meta property="og:site_name" content="RE Inmobiliaria SAS">
-        <meta property="og:description" content="Resultados Excelentes en el sector inmobiliario">
-        <meta property="og:type" content="website">
-        <meta property="og:image" content="assets/img/reisas-og-img.jpg">
-        <!--<meta property="og:url" content="https://reinmobiliariasas.com/">-->
-        <!--<meta property="fb:app_id" content="775678255785283">-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Detalle del inmueble — RE Inmobiliaria SAS. Bogotá y Mosquera.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 
-        <!-- Links  -->
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
-        <link rel="stylesheet" type="text/css" href="styles/main.css" />
-        <title>detalle inmueble</title>
+    <meta property="og:title" content="Inmueble — RE Inmobiliaria SAS">
+    <meta property="og:site_name" content="RE Inmobiliaria SAS">
+    <meta property="og:description" content="Encuentra tu inmueble ideal con RE Inmobiliaria SAS en Bogotá y Mosquera.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/img/reisas-og-img.jpg">
+
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/footer.css">
+    <title>Detalle inmueble — RE Inmobiliaria SAS</title>
+    <link rel="stylesheet" href="styles/inmueble.css">
 </head>
 
 <body>
-
     <header id="main-header-container"></header>
 
-    <section class="inmueble-info">
-        <div class="info-container">
-            
+    <!-- Skeleton mientras carga -->
+    <div class="skeleton-page" id="skeleton-detalle">
+        <div style="height:20px; width:200px; margin-bottom:1.5rem;" class="sk"></div>
+        <div class="sk-grid">
+            <div class="sk sk-galeria"></div>
+            <div class="sk sk-panel"></div>
+        </div>
+        <div style="height:180px; border-radius:16px; margin-top:2rem;" class="sk"></div>
+    </div>
+
+    <!-- Contenido real (oculto hasta que cargue) -->
+    <div class="detalle-page" id="detalle-page" style="display:none;">
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="index.html">Inicio</a>
+            <span>›</span>
+            <a href="buscar_inmuebles.html">Inmuebles</a>
+            <span>›</span>
+            <span id="breadcrumb-titulo">Detalle</span>
+        </nav>
+
+        <!-- Grid principal -->
+        <div class="detalle-grid">
+
             <!-- Galería -->
             <section class="galeria">
                 <div class="galeria-principal">
                     <button class="galeria-btn prev" aria-label="Imagen anterior">❮</button>
-
                     <img id="imagen-principal" src="" alt="Imagen del inmueble">
-
                     <button class="galeria-btn next" aria-label="Imagen siguiente">❯</button>
+                    <div class="foto-counter" id="foto-counter">1 / 1</div>
                 </div>
-
                 <div class="galeria-miniaturas" id="miniaturas"></div>
             </section>
 
-            <!-- Información del inmueble -->
-            <section class="info">
-                <h1 id="titulo"></h1>
-                <h3 id="operacion" class="operacion"></h3>
-                <p class="precio" id="precio"></p>
+            <!-- Panel lateral info -->
+            <aside class="panel-info">
+                <div id="operacion" class="badge-operacion"></div>
 
-                <div class="especificaciones" id="especificaciones"></div>
+                <div>
+                    <h1 id="titulo"></h1>
+                </div>
 
-                <a class="btn-primary" id="btn-whatsapp" target="_blank">
+                <div>
+                    <div class="precio-principal" id="precio"></div>
+                    <div class="precio-label" id="precio-label"></div>
+                </div>
+
+                <!-- Specs rápidas: habitaciones, baños, área -->
+                <div class="specs-rapidas" id="specs-rapidas"></div>
+
+                <!-- CTAs -->
+                <a class="btn-whatsapp-full" id="btn-whatsapp" href="#" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
                     Contactar por WhatsApp
                 </a>
-            </section>
 
+                <a class="btn-como-llegar" id="btn-como-llegar" href="#" target="_blank">
+                    📍 Cómo llegar
+                </a>
+
+                <div class="codigo-ref" id="codigo-ref"></div>
+            </aside>
         </div>
 
-        <section class="info-secundaria" id="">
-            <h3>Descripción</h3>
-            <p id="descripcion"></p>
-        </section>
+        <!-- Secciones inferiores -->
+        <div class="detalle-body">
 
-        <section class="mapa" id="mapa">
-            
-        </section>
-    </section>
+            <!-- Descripción -->
+            <div class="seccion-card" id="sec-descripcion">
+                <h2>📝 Descripción</h2>
+                <p id="descripcion"></p>
+            </div>
 
+            <!-- Detalles técnicos — poblado por cargarDetalles() -->
+            <div class="seccion-card" id="sec-detalles" style="display:none;">
+                <h2>📋 Detalles del inmueble</h2>
+                <div class="detalles-grid" id="detalles"></div>
+            </div>
+
+            <!-- Comodidades — poblado por cargarComodidades() -->
+            <div class="seccion-card" id="sec-comodidades" style="display:none;">
+                <h2>⭐ Características y comodidades</h2>
+                <div class="comodidades-grid" id="comodidades"></div>
+            </div>
+
+            <!-- Mapa -->
+            <div class="seccion-card" id="sec-mapa">
+                <h2>📍 Ubicación</h2>
+                <div class="mapa-wrapper" id="mapa"></div>
+            </div>
+
+        </div>
+    </div>
 
     <div id="footer-container"></div>
-    <script src="src/footer.js"></script>
-    <script id="site" type="module" src="src/main.js"></script>
-    <script type="module" src="src/api.js"></script>
-    <script type="module" src="src/inmueble.js"></script>
 
+    <script src="dist/footer.js"></script>
+    <script id="site" type="module" src="dist/main.js"></script>
+    <script type="module" src="dist/api.js"></script>
+
+    <!-- inmueble.js mejorado inline para aprovechar nuevos elementos sin romper el JS original -->
+    <script type="module">
+        import { apiGet } from "/dist/api.js";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const codigo = params.get("codigo");
+
+            if (!codigo) {
+                mostrarError("No se encontró el código del inmueble.");
+                return;
+            }
+
+            cargarInmueble(codigo);
+        });
+
+        function mostrarError(msg) {
+            document.getElementById("skeleton-detalle").innerHTML = `
+                <div style="text-align:center; padding:4rem 2rem; color:#888;">
+                    <div style="font-size:3rem; margin-bottom:1rem;">🏚️</div>
+                    <h3 style="color:#555; margin-bottom:0.5rem;">Inmueble no encontrado</h3>
+                    <p>${msg}</p>
+                    <a href="buscar_inmuebles.html" style="display:inline-block; margin-top:1.5rem; padding:0.8rem 1.5rem; background:#e56d11; color:#fff; border-radius:10px; text-decoration:none; font-weight:700;">
+                        Ver todos los inmuebles
+                    </a>
+                </div>
+            `;
+        }
+
+        async function cargarInmueble(codigo) {
+            try {
+                const data = await apiGet(`ApiSimiweb/response/v2/inmueble/codInmueble/${codigo}`);
+                console.log("DATA API:", data);
+
+                // ── TÍTULO
+                const tipo = data.Tipo_Inmueble || data.Tipo || data.Titulo_Web || "Inmueble";
+                const barrio = data.Barrio || data.barrio || "";
+                const tituloTexto = barrio ? `${tipo} en ${barrio}` : tipo;
+
+                document.getElementById("titulo").textContent = tituloTexto;
+                document.getElementById("breadcrumb-titulo").textContent = tituloTexto;
+                document.title = `${tituloTexto} — RE Inmobiliaria SAS`;
+
+                // ── OPERACIÓN badge
+                const operacionEl = document.getElementById("operacion");
+                const gestion = data.Gestion || "";
+                if (gestion === "Arriendo") {
+                    operacionEl.textContent = "En arriendo";
+                    operacionEl.className = "badge-operacion";
+                } else if (gestion === "Venta") {
+                    operacionEl.textContent = "En venta";
+                    operacionEl.className = "badge-operacion venta";
+                } else if (gestion.includes("Venta")) {
+                    operacionEl.textContent = "Arriendo y Venta";
+                    operacionEl.className = "badge-operacion ambos";
+                } else {
+                    operacionEl.textContent = gestion || "Disponible";
+                }
+
+                // ── PRECIO
+                let precio = null;
+                let precioLabel = "";
+                if (gestion === "Arriendo") {
+                    precio = data.ValorCanon;
+                    precioLabel = "Canon mensual";
+                } else if (gestion === "Venta") {
+                    precio = data.ValorVenta;
+                    precioLabel = "Precio de venta";
+                } else {
+                    precio = data.ValorCanon || data.ValorVenta;
+                    precioLabel = data.ValorCanon ? "Canon mensual" : "Precio de venta";
+                }
+
+                document.getElementById("precio").textContent =
+                    precio ? `$${Number(precio).toLocaleString("es-CO")}` : "Consultar precio";
+                document.getElementById("precio-label").textContent = precioLabel;
+
+                // ── SPECS RÁPIDAS
+                const specsRapidas = document.getElementById("specs-rapidas");
+                const specs = [
+                    { icon: "🛏️", val: data.alcobas || data.Alcobas, label: "Habitaciones" },
+                    { icon: "🚿", val: data.banos || data.banios, label: "Baños" },
+                    { icon: "📐", val: data.AreaConstruida ? `${data.AreaConstruida} m²` : null, label: "Área" },
+                ];
+                specs.forEach(s => {
+                    if (!s.val || s.val === "0") return;
+                    const div = document.createElement("div");
+                    div.className = "spec-item";
+                    div.innerHTML = `
+                        <span class="spec-icon">${s.icon}</span>
+                        <span class="spec-val">${s.val}</span>
+                        <span class="spec-label">${s.label}</span>
+                    `;
+                    specsRapidas.appendChild(div);
+                });
+
+                // ── CÓDIGO REF
+                document.getElementById("codigo-ref").textContent = `Ref. #${codigo}`;
+
+                // ── DESCRIPCIÓN
+                document.getElementById("descripcion").textContent =
+                    data.descripcionlarga || data.Descripcion || "Sin descripción disponible.";
+
+                // ── WHATSAPP
+                const mensaje = `Hola, vi el inmueble ${tituloTexto} (ref. ${codigo}) y quisiera más información.`;
+                document.getElementById("btn-whatsapp").href =
+                    `https://wa.me/573213770000?text=${encodeURIComponent(mensaje)}`;
+
+                // ── IMÁGENES
+                cargarImagenes(data);
+
+                // ── DETALLES TÉCNICOS
+                cargarDetalles(data);
+
+                // ── COMODIDADES
+                cargarComodidades(data);
+
+                // ── MAPA + BOTÓN CÓMO LLEGAR
+                cargarMapa(data, codigo);
+
+                // ── Mostrar página, ocultar skeleton
+                document.getElementById("skeleton-detalle").style.display = "none";
+                document.getElementById("detalle-page").style.display = "block";
+
+            } catch (error) {
+                console.error("ERROR:", error);
+                mostrarError("Hubo un problema cargando la información. Intente de nuevo.");
+            }
+        }
+
+        function cargarImagenes(data) {
+            const principal = document.getElementById("imagen-principal");
+            const miniaturas = document.getElementById("miniaturas");
+            const btnPrev = document.querySelector(".galeria-btn.prev");
+            const btnNext = document.querySelector(".galeria-btn.next");
+            const counter = document.getElementById("foto-counter");
+
+            if (!data.fotos || data.fotos.length === 0) {
+                principal.src = "assets/img/no-image.jpg";
+                counter.style.display = "none";
+                return;
+            }
+
+            const fotos = data.fotos.map(f => f.foto);
+            let indiceActual = 0;
+            let thumbs = [];
+
+            counter.textContent = `1 / ${fotos.length}`;
+
+            const actualizarActiva = () => {
+                thumbs.forEach((img, i) => img.classList.toggle("activa", i === indiceActual));
+                counter.textContent = `${indiceActual + 1} / ${fotos.length}`;
+                const activa = thumbs[indiceActual];
+                if (activa) centrarMiniatura(activa);
+            };
+
+            const cambiarImagen = (nuevoIndice, direccion = 1) => {
+                if (nuevoIndice === indiceActual) return;
+
+                const imgOld = document.createElement("img");
+                imgOld.src = fotos[indiceActual];
+                imgOld.className = "img-old";
+
+                const imgNew = document.createElement("img");
+                imgNew.src = fotos[nuevoIndice];
+                imgNew.className = "img-anim";
+                imgNew.style.transform = `translateX(${direccion * 100}%)`;
+                imgNew.style.opacity = "1";
+
+                principal.parentElement.append(imgOld, imgNew);
+
+                requestAnimationFrame(() => {
+                    imgOld.style.opacity = "0";
+                    imgOld.style.filter = "blur(100px)";
+                    imgOld.style.transform = `translateX(${-direccion * 40}px)`;
+                    imgNew.style.transform = "translateX(0)";
+                });
+
+                setTimeout(() => {
+                    principal.src = fotos[nuevoIndice];
+                    imgOld.remove();
+                    imgNew.remove();
+                    indiceActual = nuevoIndice;
+                    actualizarActiva();
+                }, 450);
+            };
+
+            principal.src = fotos[0];
+
+            fotos.forEach((src, index) => {
+                const img = document.createElement("img");
+                img.src = src;
+                img.addEventListener("click", () => cambiarImagen(index, index > indiceActual ? 1 : -1));
+                miniaturas.appendChild(img);
+                thumbs.push(img);
+            });
+
+            actualizarActiva();
+
+            btnPrev.addEventListener("click", () => {
+                cambiarImagen((indiceActual - 1 + fotos.length) % fotos.length, -1);
+            });
+            btnNext.addEventListener("click", () => {
+                cambiarImagen((indiceActual + 1) % fotos.length, 1);
+            });
+
+            // Swipe en móvil
+            let touchStartX = 0;
+            principal.parentElement.addEventListener("touchstart", e => { touchStartX = e.touches[0].clientX; });
+            principal.parentElement.addEventListener("touchend", e => {
+                const diff = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) cambiarImagen((indiceActual + 1) % fotos.length, 1);
+                    else cambiarImagen((indiceActual - 1 + fotos.length) % fotos.length, -1);
+                }
+            });
+
+            setTimeout(() => actualizarActiva(), 150);
+        }
+
+        function centrarMiniatura(img) {
+            const contenedor = img.parentElement;
+            const desplazamiento = img.getBoundingClientRect().left
+                - contenedor.getBoundingClientRect().left
+                - (contenedor.clientWidth / 2)
+                + (img.clientWidth / 2);
+            contenedor.scrollBy({ left: desplazamiento, behavior: "smooth" });
+        }
+
+        function cargarDetalles(data) {
+            const lista = [
+                { label: "Área construida", value: data.AreaConstruida ? `${data.AreaConstruida} m²` : null },
+                { label: "Área privada", value: data.AreaPrivada ? `${data.AreaPrivada} m²` : null },
+                { label: "Habitaciones", value: data.alcobas || data.Alcobas },
+                { label: "Baños", value: data.banos || data.banios },
+                { label: "Garajes", value: data.garaje || data.garajes || data.Garaje },
+                { label: "Estrato", value: data.Estrato || data.estrato },
+                { label: "Piso", value: data.piso },
+                { label: "Antigüedad", value: data.Antiguedad || data.antiguedad },
+                { label: "Año construcción", value: data.AnioConstruccion || data.anioConstruccion },
+                { label: "Estado", value: data.Estado || data.estado },
+                { label: "Administración", value: data.Administracion ? `$${Number(data.Administracion).toLocaleString("es-CO")}` : null },
+                { label: "Portería", value: data.Porteria ? "Sí" : null },
+                { label: "Ascensor", value: data.Ascensor ? "Sí" : null },
+                { label: "Amoblado", value: data.Amoblado ? "Sí" : null },
+                { label: "Gas natural", value: data.GasNatural ? "Sí" : null },
+                { label: "Balcón", value: data.Balcon ? "Sí" : null },
+                { label: "Terraza", value: data.Terraza ? "Sí" : null },
+                { label: "Patio", value: data.Patio ? "Sí" : null },
+                { label: "Depósito", value: data.Deposito ? "Sí" : null },
+            ];
+
+            const cont = document.getElementById("detalles");
+            let hayDetalles = false;
+
+            lista.forEach(item => {
+                if (!item.value || item.value === "0" || item.value === 0) return;
+                hayDetalles = true;
+                const div = document.createElement("div");
+                div.className = "detalle-item";
+                div.innerHTML = `
+                    <span class="det-label">${item.label}</span>
+                    <span class="det-val">${item.value}</span>
+                `;
+                cont.appendChild(div);
+            });
+
+            if (hayDetalles) {
+                document.getElementById("sec-detalles").style.display = "block";
+            }
+        }
+
+        function cargarComodidades(data) {
+            const fuentes = [
+                data.caracteristicas,
+                data.caracteristicasInternas,
+                data.caracteristicasExternas,
+                data.Caracteristicas_Adicionales
+            ];
+
+            let comodidades = [];
+            fuentes.forEach(f => {
+                if (Array.isArray(f)) {
+                    f.forEach(item => {
+                        const nombre = item.nombre || item.Nombre;
+                        if (nombre) comodidades.push(nombre);
+                    });
+                }
+            });
+
+            comodidades = [...new Set(comodidades)];
+            if (comodidades.length === 0) return;
+
+            const listaEl = document.getElementById("comodidades");
+            comodidades.forEach(nombre => {
+                const span = document.createElement("span");
+                span.className = "comodidad-tag";
+                span.textContent = nombre;
+                listaEl.appendChild(span);
+            });
+
+            document.getElementById("sec-comodidades").style.display = "block";
+        }
+
+        function cargarMapa(data, codigo) {
+            const mapaEl = document.getElementById("mapa");
+            const btnLlegar = document.getElementById("btn-como-llegar");
+
+            const latRaw = data.Latitud ?? data.Lat ?? data.latitud ?? data.lat;
+            const lonRaw = data.Longitud ?? data.Lon ?? data.longitud ?? data.lon ?? data.Lng ?? data.lng;
+            const lat = latRaw !== undefined ? Number(latRaw) : NaN;
+            const lon = lonRaw !== undefined ? Number(lonRaw) : NaN;
+
+            const direccion = data.Direccion || data.direccion
+                || [data.Barrio, data.Ciudad, data.Departamento].filter(Boolean).join(", ");
+
+            let embedSrc = null;
+            let directionsUrl = null;
+
+            if (Number.isFinite(lat) && Number.isFinite(lon)) {
+                embedSrc = `https://www.google.com/maps?q=${lat},${lon}&z=16&output=embed`;
+                directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
+            } else if (direccion) {
+                embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(direccion)}&z=14&output=embed`;
+                directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(direccion)}`;
+            }
+
+            if (embedSrc) {
+                mapaEl.innerHTML = `<iframe src="${embedSrc}" allowfullscreen loading="lazy"></iframe>`;
+            } else {
+                document.getElementById("sec-mapa").style.display = "none";
+            }
+
+            if (directionsUrl) {
+                btnLlegar.href = directionsUrl;
+                btnLlegar.target = "_blank";
+                btnLlegar.rel = "noopener noreferrer";
+            } else {
+                btnLlegar.style.display = "none";
+            }
+        }
+    </script>
 </body>
+
 </html>
