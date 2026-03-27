@@ -1,172 +1,318 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-         <!-- Metadata -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="Resultados Excelentes en el sector inmobiliario">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description"
+        content="Administración de inmuebles en arriendo en Bogotá y Mosquera. Canon garantizado, estudio de arrendatario y respaldo legal. RE Inmobiliaria SAS.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 
-        <!-- OG Metadata -->
-        <meta property="og:title" content="RE Inmobiliaria SAS">
-        <meta property="og:site_name" content="RE Inmobiliaria SAS">
-        <meta property="og:description" content="Resultados Excelentes en el sector inmobiliario">
-        <meta property="og:type" content="website">
-        <meta property="og:image" content="assets/img/reisas-og-img.jpg">
-        <!--<meta property="og:url" content="https://reinmobiliariasas.com/">-->
-        <!--<meta property="fb:app_id" content="775678255785283">-->
+    <!-- OG Metadata -->
+    <meta property="og:title" content="Arriendos — RE Inmobiliaria SAS">
+    <meta property="og:site_name" content="RE Inmobiliaria SAS">
+    <meta property="og:description"
+        content="Administración profesional de inmuebles en arriendo. Canon garantizado, sin estrés, 100% respaldado.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/img/reisas-og-img.jpg">
 
-        <!-- Links  -->
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
-        <link rel="stylesheet" type="text/css" href="../styles/main.css" />
-        <title>Arriendos</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/footer.css">
+    <title>Arriendos — RE Inmobiliaria SAS</title>
+    <link rel="stylesheet" href="styles/arriendos.css">
 </head>
+
 <body>
     <header id="main-header-container"></header>
-    <main class="pagina-servicio-venta">
-        <section class="section-subheader">
-            <H1>Administramos tu inmueble como si fuera nuestro</H1>
-            <p>Planes de arriendo con respaldo, garantía y todo digital</p>
+
+    <!-- ═══════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════ -->
+    <section class="arriendos-hero">
+        <h1>Su inmueble, <span>bien administrado.</span><br>Su tranquilidad, garantizada.</h1>
+        <p>En RE Inmobiliaria gestionamos su propiedad de principio a fin: encontramos el arrendatario ideal,
+            garantizamos el canon y resolvemos cualquier inconveniente por usted.</p>
+        <div class="hero-ctas">
+            <a class="btn-primary"
+                href="https://wa.me/573213770000?text=Hola%2C%20quiero%20arrendar%20mi%20inmueble%20con%20RE%20Inmobiliaria"
+                target="_blank">
+                Afiliar mi inmueble
+            </a>
+            <a class="btn-secondary" href="buscar_inmuebles.html">
+                Buscar un inmueble
+            </a>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         TABS PROPIETARIO / INQUILINO
+    ═══════════════════════════════════════════ -->
+    <nav class="audiencias-nav" id="tabs-nav">
+        <button class="tab-btn active" data-tab="propietario">Soy propietario</button>
+        <button class="tab-btn" data-tab="inquilino">Busco dónde vivir</button>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         PANEL PROPIETARIO
+    ═══════════════════════════════════════════ -->
+    <div class="tab-panel active" id="tab-propietario">
+
+        <!-- BENEFICIOS -->
+        <section class="beneficios-section">
+            <h2 class="reveal">¿Por qué confiar su inmueble a RE Inmobiliaria?</h2>
+            <div class="beneficios-grid">
+                <div class="beneficio-card reveal">
+                    <div class="icono"></div>
+                    <h4>Canon garantizado hasta 36 meses</h4>
+                    <p>Si el inquilino no paga, nosotros le pagamos a usted. Su ingreso no se detiene.</p>
+                </div>
+                <div class="beneficio-card reveal">
+                    <div class="icono"></div>
+                    <h4>Estudio riguroso del arrendatario</h4>
+                    <p>Verificamos centrales de riesgo, ingresos y referencias. Solo ingresan inquilinos que cumplen.
+                    </p>
+                </div>
+                <div class="beneficio-card reveal">
+                    <div class="icono"></div>
+                    <h4>Respaldo jurídico incluido</h4>
+                    <p>Contratos, renovaciones y gestión de incumplimientos con soporte legal en todo momento.</p>
+                </div>
+                <div class="beneficio-card reveal">
+                    <div class="icono"></div>
+                    <h4>Gestión 100% digital</h4>
+                    <p>Publicamos su inmueble en los principales portales y canales digitales desde el día uno.</p>
+                </div>
+                <div class="beneficio-card reveal">
+                    <div class="icono"></div>
+                    <h4>Fotografía y publicidad profesional</h4>
+                    <p>Tomamos las fotos, redactamos el aviso y gestionamos las visitas. Usted no tiene que mover un
+                        dedo.</p>
+                </div>
+                <div class="beneficio-card reveal">
+                    <div class="icono"> </div>
+                    <h4>Cobro de servicios y administración</h4>
+                    <p>Según el plan elegido, nos encargamos de servicios públicos y cuotas de administración.</p>
+                </div>
+            </div>
         </section>
 
-        <section class="como-funciona">  <!-- seccion como funciona -->
-            <h3>¿Cómo funciona?</h3>
-            <div class="grid-cards-servicio">
-                <div class="card-servicio">
-                    <h4>Enseñamos tu inmueble</h4>
-                    <p>Nos encargamos de todas las visitas con interesados.</p>
+        <!-- CÓMO FUNCIONA PROPIETARIO -->
+        <section class="como-funciona-section">
+            <h2 class="reveal">Así de fácil es arrendar con nosotros</h2>
+            <div class="pasos-grid">
+                <div class="paso-card reveal">
+                    <div class="paso-num">01</div>
+                    <h4>Afiliamos su inmueble</h4>
+                    <p>Tomamos fotografías, definimos el valor comercial y activamos la publicidad en portales
+                        digitales.</p>
                 </div>
-                <div class="card-servicio">
+                <div class="paso-card reveal">
+                    <div class="paso-num">02</div>
+                    <h4>Gestionamos las visitas</h4>
+                    <p>Atendemos a todos los interesados. Usted no tiene que desplazarse ni coordinar nada.</p>
+                </div>
+                <div class="paso-card reveal">
+                    <div class="paso-num">03</div>
                     <h4>Verificamos al arrendatario</h4>
-                    <p>Hacemos estudios completos para garantizar confiabilida</p>
+                    <p>Estudio de crédito, centrales de riesgo e ingresos. Solo avanzamos con quien cumple.</p>
                 </div>
-                <div class="card-servicio">
-                    <h4>Garantizamos el arriendo</h4>
-                    <p>Respaldas tu canon, servicios y más</p>
+                <div class="paso-card reveal">
+                    <div class="paso-num">04</div>
+                    <h4>Firmamos el contrato</h4>
+                    <p>Redactamos y legalizamos el contrato de arrendamiento con respaldo de aseguradora.</p>
+                </div>
+                <div class="paso-card reveal">
+                    <div class="paso-num">05</div>
+                    <h4>Usted cobra sin preocupaciones</h4>
+                    <p>Le trasladamos el canon en los días acordados según su plan. Todo reportado y transparente.</p>
                 </div>
             </div>
-
         </section>
 
-        <section class="como-funciona">  <!-- planes y tarifas -->
-            <h3>Planes y tarifas</h3>
-            <div class="grid-cards-servicio">
-                <div class="card-servicio">
-                    <h4>Plan Premiun</h4>
+        <!-- PLANES -->
+        <section class="planes-section">
+            <h2 class="reveal">Planes de administración</h2>
+            <p class="planes-subtitle reveal">Elija el nivel de cobertura que más le conviene</p>
+            <div class="planes-grid">
 
-                    <p>Pago el 5° dia habil.</p>
-                    <p>Garantia de canon (hasta 36 meses)</p>
-                    <p>Servicios públicos y daños</p>
-                    <p>Canon mensual: 14.87%</p>
-                    <div class="comision">
-                        <div class="marcador-comision"></div>
-                        <p class="text-comision">10.33% + IVA (1.96%) + Seguro (2.57%) = 14.87%</p>
+                <div class="plan-card reveal">
+                    <div class="plan-header dark">
+                        <h3>Plan Plus</h3>
+                        <div class="plan-precio">12.09% <span>/ mes</span></div>
+                        <div class="plan-pago">Pago el 10° día hábil</div>
+                    </div>
+                    <div class="plan-body">
+                        <div class="plan-item">Garantía de canon hasta 36 meses</div>
+                        <div class="plan-item">Servicios públicos cubiertos</div>
+                        <div class="plan-item">Estudio del arrendatario incluido</div>
+                        <div class="plan-item">Gestión de visitas y publicidad</div>
+                        <div class="plan-desglose">8% + IVA (1.52%) + Seguro (2.57%) = 12.09%</div>
                     </div>
                 </div>
 
-                <div class="card-servicio">
-                    <h4>Plan Plus</h4>
-
-                    <p>Pago el 10° dia habil.</p>
-                    <p>Garantia de canon (hasta 36 meses)</p>
-                    <p>Servicios públicos</p>
-                    <p>Canon mensual: 12.09%</p>
-
-                    <div class="comision">
-                        <div class="marcador-comision"></div>
-                        <p class="text-comision">8% + IVA (1.52%) + Seguro (2.57%) = 12.09%</p>
+                <div class="plan-card reveal">
+                    <div class="plan-header">
+                        <h3>Plan Premium ⭐</h3>
+                        <div class="plan-precio">14.87% <span>/ mes</span></div>
+                        <div class="plan-pago">Pago el 5° día hábil</div>
+                    </div>
+                    <div class="plan-body">
+                        <div class="plan-item">Garantía de canon hasta 36 meses</div>
+                        <div class="plan-item">Servicios públicos y daños cubiertos</div>
+                        <div class="plan-item">Estudio del arrendatario incluido</div>
+                        <div class="plan-item">Gestión de visitas y publicidad</div>
+                        <div class="plan-item">Pago prioritario (5° día hábil)</div>
+                        <div class="plan-desglose">10.33% + IVA (1.96%) + Seguro (2.57%) = 14.87%</div>
                     </div>
                 </div>
+
             </div>
-            <a class="btn-primary" 
-                    id="btn-whatsapp" 
-                    target="_blank" 
-                    href="https://wa.me/573213770000?text=Hola%20me%20gustaria%20afiliar%20mi%20inmueble%20en%20venta">
-                    Contactar por WhatsApp
+
+            <div style="margin-top:2rem; text-align:center;">
+                <a class="btn-primary"
+                    href="https://wa.me/573213770000?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20los%20planes%20de%20arriendo"
+                    target="_blank">
+                    Hablar con un asesor
                 </a>
+            </div>
         </section>
 
-        <section class="documentos-afiliar"> <!-- Documentos para afiliar -->
-            <h3>Documentos para afiliar tu inmueble en arriendo</h3>
-
-            <div class="lista-requerimientos">
-                <img src="/assets/icon/tick.png" class="icon-tick">
-                <p>Certificado de libertad (no mayor a 30 días).</p>
+        <!-- DOCUMENTOS PROPIETARIO -->
+        <section class="docs-section">
+            <h2 class="reveal">Documentos para afiliar su inmueble</h2>
+            <p class="docs-subtitle reveal">El proceso es sencillo. Estos son los documentos que necesita tener listos:
+            </p>
+            <div class="docs-columns">
+                <div class="docs-col reveal">
+                    <h3>Documentos requeridos</h3>
+                    <div class="doc-item"><span class="doc-check">✓</span> Certificado de tradición y libertad (no mayor
+                        a 30 días)</div>
+                    <div class="doc-item"><span class="doc-check">✓</span> Fotocopia de cédula de ciudadanía</div>
+                    <div class="doc-item"><span class="doc-check">✓</span> Impuesto predial vigente</div>
+                    <div class="doc-item"><span class="doc-check">✓</span> Fotocopias de recibos de servicios públicos
+                        (agua, luz, gas)</div>
+                    <div class="doc-item"><span class="doc-check">✓</span> RUT (si aplica)</div>
+                    <div class="doc-item"><span class="doc-check">✓</span> Paz y salvo y estado de cuenta de
+                        administración (solo apartamentos en conjunto)</div>
+                </div>
             </div>
-
-            <div class="lista-requerimientos">
-                <img src="/assets/icon/tick.png" class="icon-tick">
-                <p>Fotocopia de tu cedula.</p>
+            <div class="nota-inscripcion reveal">
+                💳 <strong>Valor de inscripción: $178.500 IVA incluido.</strong> Incluye fotografías profesionales,
+                publicación en portales y pauta publicitaria.
             </div>
-
-            <div class="lista-requerimientos">
-                <img src="/assets/icon/tick.png" class="icon-tick">
-                <p>Impuesto predial actual.</p>
-            </div>
-
-            <div class="lista-requerimientos">
-                <img src="/assets/icon/tick.png" class="icon-tick">
-                <p>RUT en caso de tenerlo.</p>
-            </div>
-
-            <div class="lista-requerimientos">
-                <img src="/assets/icon/tick.png" class="icon-tick">
-                <p>Fotocopia de reecibos públicos (agua, luz, gas).</p>
-            </div>
-
-            <div class="lista-requerimientos">
-                <img src="/assets/icon/tick.png" class="icon-tick">
-                <p>Paz y salvo y estado de cuenta de la administración ( solo si es un apartamento en conjunto ).</p>
-            </div>
-
-            <div class="comision">
-                        <div class="marcador-comision"></div>
-                        <p class="text-comision">Valor inscripción: <b>$178.500 IVA incluido.</b> Incluye fotografías, publicación y publicidad.</p>
-            </div>
-        
         </section>
 
-                <section class="documentos-afiliar"> <!-- Documentos para afiliar -->
-            <h3>¿Quieres tomar un inmueble en arriendo?</h3>
+    </div>
+    <!-- /tab-propietario -->
 
-            <div class="lista-requerimientos">
-                <p>Proceso digital con aseguradora <b>El Libertador:</b></p>
+    <!-- ═══════════════════════════════════════════
+         PANEL INQUILINO
+    ═══════════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-inquilino">
+
+        <section class="inquilino-requisitos">
+            <h2 class="reveal">Arriende con tranquilidad y respaldo</h2>
+            <p class="inq-subtitle reveal">Trabajamos con la aseguradora <strong>El Libertador</strong> para un proceso
+                digital, seguro y sin complicaciones.</p>
+
+            <div class="inq-card reveal">
+                <p style="font-weight:700; color:#333; margin-bottom:0.5rem;">Requisitos para aplicar:</p>
+
+                <div class="inq-item">
+                    <span class="inq-icon">💼</span>
+                    <span>Arrendatario y codeudor con ingresos iguales o superiores al doble del canon mensual.</span>
+                </div>
+                <div class="inq-item">
+                    <span class="inq-icon">📊</span>
+                    <span>Sin reportes negativos en centrales de riesgo (Datacrédito / TransUnion).</span>
+                </div>
+                <div class="inq-item">
+                    <span class="inq-icon">🪪</span>
+                    <span>Fotocopia de cédula de ciudadanía del arrendatario y del codeudor.</span>
+                </div>
+
+                <div class="inq-nota">
+                    📄 <strong>Derechos de contrato:</strong> 16% del canon mensual (IVA incluido). Pago único al
+                    momento de la firma.
+                </div>
             </div>
 
-            <div class="lista-requerimientos">
-                <img src="/assets/icon/tick.png" class="icon-tick">
-                <p>Arrendatario y codeudor con ingresos del doble del canon.</p>
-            </div>
-
-            <div class="lista-requerimientos">
-                <img src="/assets/icon/tick.png" class="icon-tick">
-                <p>Sin reportes en centrales de riesgo.</p>
-            </div>
-
-            <div class="lista-requerimientos">
-                <img src="/assets/icon/tick.png" class="icon-tick">
-                <p>Fotocopia de cédula.</p>
-            </div>
-
-            <div class="comision">
-                <div class="marcador-comision"></div>
-                <p class="text-comision">Derechos de contrato: <b> 16% del canon (IVA incluido).</b></p>
-            </div>
-
-            <a class="btn-primary" 
-                    id="btn-whatsapp" 
-                    target="_blank" 
-                    href="https://wa.me/573213770000?text=Hola%20me%20gustaria%20afiliar%20mi%20inmueble%20en%20venta">
-                    Contactar por WhatsApp
+            <div style="margin-top:2rem; text-align:center;">
+                <a class="btn-primary" href="buscar_inmuebles.html">
+                    Ver inmuebles disponibles
                 </a>
+                <br><br>
+                <a class="btn-secondary"
+                    href="https://wa.me/573213770000?text=Hola%2C%20quiero%20informaci%C3%B3n%20para%20arrendar%20un%20inmueble"
+                    target="_blank">
+                    Hablar con un asesor
+                </a>
+            </div>
         </section>
 
-        <section>
-            <!-- FORMULARIO DE CONTACTO -->
-        </section>
+    </div>
+    <!-- /tab-inquilino -->
 
-    </main>
+    <!-- ═══════════════════════════════════════════
+         CTA FINAL
+    ═══════════════════════════════════════════ -->
+    <section class="cta-final">
+        <h2>¿Listo para arrendar sin dolores de cabeza?</h2>
+        <p>Contáctenos hoy y uno de nuestros asesores le explicará todo el proceso sin compromisos.</p>
+        <a class="btn-blanco"
+            href="https://wa.me/573213770000?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20arriendos"
+            target="_blank">
+            📲 Escribir por WhatsApp
+        </a>
+    </section>
+
     <div id="footer-container"></div>
-    <script src="src/footer.js"></script>
+
+    <script src="dist/footer.js"></script>
+    <script id="site" type="module" src="dist/main.js"></script>
+
+    <script>
+        // ── TABS ──
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.dataset.tab;
+
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabPanels.forEach(p => p.classList.remove('active'));
+
+                btn.classList.add('active');
+                document.getElementById('tab-' + target).classList.add('active');
+
+                // re-trigger scroll reveal for newly visible panel
+                triggerReveal();
+            });
+        });
+
+        // ── SCROLL REVEAL ──
+        function triggerReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            reveals.forEach(el => {
+                if (!el.classList.contains('visible')) {
+                    observer.observe(el);
+                }
+            });
+        }
+
+        triggerReveal();
+    </script>
 </body>
+
 </html>
