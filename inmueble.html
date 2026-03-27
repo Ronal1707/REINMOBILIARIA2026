@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="styles/footer.css">
     <title>Detalle inmueble — RE Inmobiliaria SAS</title>
     <link rel="stylesheet" href="styles/inmueble.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 
 <body>
@@ -120,6 +122,17 @@
             </div>
 
         </div>
+    </div>
+
+    <!-- Lightbox fullscreen -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de imágenes">
+        <div class="lightbox-inner" id="lightbox-inner">
+            <img class="lightbox-img" id="lightbox-img" src="" alt="Imagen ampliada">
+        </div>
+        <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar">✕</button>
+        <button class="lightbox-btn lb-prev" id="lb-prev" aria-label="Anterior">❮</button>
+        <button class="lightbox-btn lb-next" id="lb-next" aria-label="Siguiente">❯</button>
+        <div class="lightbox-counter" id="lb-counter"></div>
     </div>
 
     <div id="footer-container"></div>
@@ -245,12 +258,12 @@
                 // ── COMODIDADES
                 cargarComodidades(data);
 
-                // ── MAPA + BOTÓN CÓMO LLEGAR
-                cargarMapa(data, codigo);
-
                 // ── Mostrar página, ocultar skeleton
                 document.getElementById("skeleton-detalle").style.display = "none";
                 document.getElementById("detalle-page").style.display = "block";
+
+                // ── MAPA (después de mostrar la página para que Leaflet mida el contenedor)
+                cargarMapa(data, codigo);
 
             } catch (error) {
                 console.error("ERROR:", error);
@@ -346,6 +359,82 @@
             });
 
             setTimeout(() => actualizarActiva(), 150);
+
+            // Inicializar lightbox pasando getter del índice actual
+            initLightbox(fotos, () => indiceActual);
+        }
+
+        /* ── LIGHTBOX ── */
+        function initLightbox(fotos, getIndiceActual) {
+            const lb        = document.getElementById("lightbox");
+            const lbImg     = document.getElementById("lightbox-img");
+            const lbCounter = document.getElementById("lb-counter");
+            const lbClose   = document.getElementById("lightbox-close");
+            const lbPrev    = document.getElementById("lb-prev");
+            const lbNext    = document.getElementById("lb-next");
+            const lbInner   = document.getElementById("lightbox-inner");
+            let lbIdx = 0;
+
+            const header = document.getElementById("main-header-container");
+
+            const abrir = (idx) => {
+                lbIdx = (idx + fotos.length) % fotos.length;
+                lbImg.src = fotos[lbIdx];
+                lbCounter.textContent = `${lbIdx + 1} / ${fotos.length}`;
+                lb.classList.add("open");
+                document.body.style.overflow = "hidden";
+                if (header) header.style.display = "none";
+            };
+
+            const cerrar = () => {
+                lb.classList.remove("open");
+                document.body.style.overflow = "";
+                if (header) header.style.display = "";
+            };
+
+            const navegar = (dir) => {
+                lbIdx = (lbIdx + dir + fotos.length) % fotos.length;
+                lbImg.style.animation = "none";
+                requestAnimationFrame(() => {
+                    lbImg.style.animation = "";
+                    lbImg.src = fotos[lbIdx];
+                    lbCounter.textContent = `${lbIdx + 1} / ${fotos.length}`;
+                });
+            };
+
+            // Abrir al clic en imagen principal
+            document.getElementById("imagen-principal").addEventListener("click", () => abrir(getIndiceActual()));
+
+            lbClose.addEventListener("click", cerrar);
+            lbPrev.addEventListener("click", () => navegar(-1));
+            lbNext.addEventListener("click", () => navegar(1));
+
+            // Clic en fondo cierra
+            lb.addEventListener("click", (e) => { if (e.target === lb || e.target === lbInner) cerrar(); });
+
+            // Teclado
+            document.addEventListener("keydown", (e) => {
+                if (!lb.classList.contains("open")) return;
+                if (e.key === "Escape")      cerrar();
+                if (e.key === "ArrowLeft")   navegar(-1);
+                if (e.key === "ArrowRight")  navegar(1);
+            });
+
+            // Swipe en lightbox
+            let swipeX = 0;
+            lbImg.addEventListener("touchstart", e => { swipeX = e.touches[0].clientX; });
+            lbImg.addEventListener("touchend",   e => {
+                const d = swipeX - e.changedTouches[0].clientX;
+                if (Math.abs(d) > 50) navegar(d > 0 ? 1 : -1);
+            });
+
+            // Miniaturas también abren el lightbox
+            document.getElementById("miniaturas").addEventListener("click", (e) => {
+                const img = e.target.closest("img");
+                if (!img) return;
+                const idx = [...img.parentElement.children].indexOf(img);
+                abrir(idx);
+            });
         }
 
         function centrarMiniatura(img) {
@@ -433,7 +522,7 @@
         }
 
         function cargarMapa(data, codigo) {
-            const mapaEl = document.getElementById("mapa");
+            const mapaEl  = document.getElementById("mapa");
             const btnLlegar = document.getElementById("btn-como-llegar");
 
             const latRaw = data.Latitud ?? data.Lat ?? data.latitud ?? data.lat;
@@ -444,30 +533,50 @@
             const direccion = data.Direccion || data.direccion
                 || [data.Barrio, data.Ciudad, data.Departamento].filter(Boolean).join(", ");
 
-            let embedSrc = null;
-            let directionsUrl = null;
-
-            if (Number.isFinite(lat) && Number.isFinite(lon)) {
-                embedSrc = `https://www.google.com/maps?q=${lat},${lon}&z=16&output=embed`;
-                directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
-            } else if (direccion) {
-                embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(direccion)}&z=14&output=embed`;
-                directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(direccion)}`;
-            }
-
-            if (embedSrc) {
-                mapaEl.innerHTML = `<iframe src="${embedSrc}" allowfullscreen loading="lazy"></iframe>`;
-            } else {
+            if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+                // Sin coordenadas: ocultar mapa y botón
                 document.getElementById("sec-mapa").style.display = "none";
+                btnLlegar.style.display = "none";
+                return;
             }
 
-            if (directionsUrl) {
-                btnLlegar.href = directionsUrl;
-                btnLlegar.target = "_blank";
-                btnLlegar.rel = "noopener noreferrer";
+            // Botón "Cómo llegar" lleva a la zona general (barrio), no al punto exacto
+            if (direccion) {
+                btnLlegar.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(direccion)}`;
             } else {
-                btnLlegar.style.display = "none";
+                btnLlegar.href = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
             }
+            btnLlegar.target = "_blank";
+            btnLlegar.rel = "noopener noreferrer";
+
+            // Pequeño desplazamiento aleatorio (≤ 40 m) para no revelar el punto exacto
+            const offsetLat = (Math.random() - 0.5) * 0.00072; // ~40 m en latitud
+            const offsetLon = (Math.random() - 0.5) * 0.00072;
+            const latAprox  = lat + offsetLat;
+            const lonAprox  = lon + offsetLon;
+
+            // Inicializar mapa Leaflet
+            const map = L.map(mapaEl, {
+                center: [latAprox, lonAprox],
+                zoom: 16,
+                zoomControl: true,
+                scrollWheelZoom: false,
+            });
+
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: "© <a href='https://openstreetmap.org'>OpenStreetMap</a>",
+                maxZoom: 19,
+            }).addTo(map);
+
+            // Círculo naranja de 50 m (ubicación aproximada)
+            L.circle([latAprox, lonAprox], {
+                radius: 50,
+                color: "#e56d11",
+                weight: 2,
+                opacity: 0.85,
+                fillColor: "#e56d11",
+                fillOpacity: 0.22,
+            }).addTo(map);
         }
     </script>
 </body>

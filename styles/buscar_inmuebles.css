@@ -287,11 +287,27 @@
     opacity: 0;
     transform: translateY(16px);
     animation: cardIn 0.35s ease forwards;
+    position: relative;
+    cursor: pointer;
 }
 
 .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+}
+
+/* Stretched link: cubre toda la card */
+.card .btn--primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+/* El carousel y sus controles quedan por encima del stretched link */
+.card .carousel {
+    position: relative;
+    z-index: 2;
 }
 
 @keyframes cardIn {

@@ -1,0 +1,49 @@
+/* =============================================
+   venta.css — estilos exclusivos de esta página
+   RE Inmobiliaria SAS
+============================================= */
+
+/* ─── HERO VENTA ─── */
+.venta-hero {
+    background: linear-gradient(135deg, #0d1a0d 0%, #1a1a1a 55%, #002a00 100%);
+    padding: 5rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+}
+
+.venta-hero h1 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.25;
+    max-width: 750px;
+}
+
+.venta-hero h1 span {
+    color: #e56d11;
+}
+
+.venta-hero p {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 580px;
+    line-height: 1.6;
+}
+
+.venta-hero .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .venta-hero .hero-ctas {
+        flex-direction: column;
+        align-items: center;
+    }
+}
