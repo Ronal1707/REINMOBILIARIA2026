@@ -86,8 +86,8 @@
                     Contactar por WhatsApp
                 </a>
 
-                <a class="btn-como-llegar" id="btn-como-llegar" href="#" target="_blank">
-                    📍 Cómo llegar
+                <a class="btn-como-llegar" id="btn-como-llegar" href="#sec-mapa" target="_blank">
+                    Cómo llegar
                 </a>
 
                 <div class="codigo-ref" id="codigo-ref"></div>
@@ -99,25 +99,25 @@
 
             <!-- Descripción -->
             <div class="seccion-card" id="sec-descripcion">
-                <h2>📝 Descripción</h2>
+                <h2>Descripción</h2>
                 <p id="descripcion"></p>
             </div>
 
             <!-- Detalles técnicos — poblado por cargarDetalles() -->
             <div class="seccion-card" id="sec-detalles" style="display:none;">
-                <h2>📋 Detalles del inmueble</h2>
+                <h2>Detalles del inmueble</h2>
                 <div class="detalles-grid" id="detalles"></div>
             </div>
 
             <!-- Comodidades — poblado por cargarComodidades() -->
             <div class="seccion-card" id="sec-comodidades" style="display:none;">
-                <h2>⭐ Características y comodidades</h2>
+                <h2>Características y comodidades</h2>
                 <div class="comodidades-grid" id="comodidades"></div>
             </div>
 
             <!-- Mapa -->
             <div class="seccion-card" id="sec-mapa">
-                <h2>📍 Ubicación</h2>
+                <h2>Ubicación</h2>
                 <div class="mapa-wrapper" id="mapa"></div>
             </div>
 
@@ -221,16 +221,16 @@
                 // ── SPECS RÁPIDAS
                 const specsRapidas = document.getElementById("specs-rapidas");
                 const specs = [
-                    { icon: "🛏️", val: data.alcobas || data.Alcobas, label: "Habitaciones" },
-                    { icon: "🚿", val: data.banos || data.banios, label: "Baños" },
-                    { icon: "📐", val: data.AreaConstruida ? `${data.AreaConstruida} m²` : null, label: "Área" },
+                    { icon: "assets/icon/hab-icon.svg", val: data.alcobas || data.Alcobas, label: "Habitaciones" },
+                    { icon: "assets/icon/banio2-icon.svg", val: data.banos || data.banios, label: "Baños" },
+                    { icon: "assets/icon/area-icon.svg", val: data.AreaConstruida ? `${data.AreaConstruida} ` : null, label: "Área" },
                 ];
                 specs.forEach(s => {
                     if (!s.val || s.val === "0") return;
                     const div = document.createElement("div");
                     div.className = "spec-item";
                     div.innerHTML = `
-                        <span class="spec-icon">${s.icon}</span>
+                        <img src="${s.icon}" class="spec-icon icon" alt="${s.label}">
                         <span class="spec-val">${s.val}</span>
                         <span class="spec-label">${s.label}</span>
                     `;
@@ -366,13 +366,13 @@
 
         /* ── LIGHTBOX ── */
         function initLightbox(fotos, getIndiceActual) {
-            const lb        = document.getElementById("lightbox");
-            const lbImg     = document.getElementById("lightbox-img");
+            const lb = document.getElementById("lightbox");
+            const lbImg = document.getElementById("lightbox-img");
             const lbCounter = document.getElementById("lb-counter");
-            const lbClose   = document.getElementById("lightbox-close");
-            const lbPrev    = document.getElementById("lb-prev");
-            const lbNext    = document.getElementById("lb-next");
-            const lbInner   = document.getElementById("lightbox-inner");
+            const lbClose = document.getElementById("lightbox-close");
+            const lbPrev = document.getElementById("lb-prev");
+            const lbNext = document.getElementById("lb-next");
+            const lbInner = document.getElementById("lightbox-inner");
             let lbIdx = 0;
 
             const header = document.getElementById("main-header-container");
@@ -415,15 +415,15 @@
             // Teclado
             document.addEventListener("keydown", (e) => {
                 if (!lb.classList.contains("open")) return;
-                if (e.key === "Escape")      cerrar();
-                if (e.key === "ArrowLeft")   navegar(-1);
-                if (e.key === "ArrowRight")  navegar(1);
+                if (e.key === "Escape") cerrar();
+                if (e.key === "ArrowLeft") navegar(-1);
+                if (e.key === "ArrowRight") navegar(1);
             });
 
             // Swipe en lightbox
             let swipeX = 0;
             lbImg.addEventListener("touchstart", e => { swipeX = e.touches[0].clientX; });
-            lbImg.addEventListener("touchend",   e => {
+            lbImg.addEventListener("touchend", e => {
                 const d = swipeX - e.changedTouches[0].clientX;
                 if (Math.abs(d) > 50) navegar(d > 0 ? 1 : -1);
             });
@@ -522,7 +522,7 @@
         }
 
         function cargarMapa(data, codigo) {
-            const mapaEl  = document.getElementById("mapa");
+            const mapaEl = document.getElementById("mapa");
             const btnLlegar = document.getElementById("btn-como-llegar");
 
             const latRaw = data.Latitud ?? data.Lat ?? data.latitud ?? data.lat;
@@ -540,20 +540,20 @@
                 return;
             }
 
-            // Botón "Cómo llegar" lleva a la zona general (barrio), no al punto exacto
-            if (direccion) {
-                btnLlegar.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(direccion)}`;
-            } else {
-                btnLlegar.href = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
-            }
-            btnLlegar.target = "_blank";
-            btnLlegar.rel = "noopener noreferrer";
+            // Botón "Cómo llegar" — scroll suave a la sección del mapa
+            btnLlegar.href = "#";
+            btnLlegar.removeAttribute("target");
+            btnLlegar.removeAttribute("rel");
+            btnLlegar.addEventListener("click", (e) => {
+                e.preventDefault();
+                document.getElementById("sec-mapa").scrollIntoView({ behavior: "smooth", block: "start" });
+            });
 
             // Pequeño desplazamiento aleatorio (≤ 40 m) para no revelar el punto exacto
             const offsetLat = (Math.random() - 0.5) * 0.00072; // ~40 m en latitud
             const offsetLon = (Math.random() - 0.5) * 0.00072;
-            const latAprox  = lat + offsetLat;
-            const lonAprox  = lon + offsetLon;
+            const latAprox = lat + offsetLat;
+            const lonAprox = lon + offsetLon;
 
             // Inicializar mapa Leaflet
             const map = L.map(mapaEl, {
