@@ -1,0 +1,579 @@
+/* ═══════════════════════════════════════════
+   MANTENIMIENTOS PAGE
+═══════════════════════════════════════════ */
+
+/* HERO */
+.mant-hero {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #fff;
+    text-align: center;
+    padding: 4rem 1.5rem 3rem;
+}
+
+.mant-hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    margin-bottom: 0.8rem;
+}
+
+.mant-hero h1 span {
+    color: var(--primary-color);
+}
+
+.mant-hero p {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* TABS NAV */
+.mant-tabs-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: #fff;
+    border-bottom: 3px solid #eee;
+    position: sticky;
+    top: 60px;
+    z-index: 100;
+}
+
+.mant-tab-btn {
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: -3px;
+}
+
+.mant-tab-btn:hover {
+    color: var(--primary-color);
+}
+
+.mant-tab-btn.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.mant-tab-panel {
+    display: none;
+}
+
+.mant-tab-panel.active {
+    display: block;
+}
+
+/* FORMULARIO SECTION */
+.mant-form-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.mant-form-image {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.mant-form-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 500px;
+}
+
+.mant-form-container {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.mant-form-container h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    text-align: left;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.mant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.mant-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.mant-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.mant-form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.mant-form-group label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.mant-form-group label .required {
+    color: var(--primary-color);
+    margin-left: 2px;
+}
+
+.mant-form-group input,
+.mant-form-group textarea,
+.mant-form-group select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: 'Montserrat', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: #fafafa;
+}
+
+.mant-form-group input:focus,
+.mant-form-group textarea:focus,
+.mant-form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(229, 109, 17, 0.15);
+    background: #fff;
+}
+
+.mant-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.mant-form-group input::placeholder,
+.mant-form-group textarea::placeholder {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* FILE UPLOAD */
+.mant-file-upload {
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #fafafa;
+    position: relative;
+}
+
+.mant-file-upload:hover {
+    border-color: var(--primary-color);
+    background: #fff5ec;
+}
+
+.mant-file-upload input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.mant-file-upload p {
+    color: #888;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.mant-file-upload .upload-icon {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.mant-file-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.mant-file-item {
+    background: #f0f0f0;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.mant-file-item button {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    line-height: 1;
+}
+
+.mant-file-item button:hover {
+    color: #e53e3e;
+}
+
+/* SUBMIT BUTTON */
+.mant-btn-submit {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    align-self: flex-end;
+}
+
+.mant-btn-submit:hover {
+    background-color: #c95e0f;
+    transform: scale(1.03);
+}
+
+.mant-btn-submit:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* SEARCH SECTION */
+.mant-search-section {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+.mant-search-container {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.mant-search-container h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    padding: 0;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.mant-search-container > p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.mant-search-form {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.mant-search-form input {
+    flex: 1;
+    max-width: 400px;
+    padding: 0.8rem 1.2rem;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.mant-search-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(229, 109, 17, 0.15);
+}
+
+.mant-search-form button {
+    padding: 0.8rem 1.8rem;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.mant-search-form button:hover {
+    background: #c95e0f;
+}
+
+/* SEARCH RESULT CARD */
+.mant-result-card {
+    background: #fffaee;
+    border-left: 5px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    text-align: left;
+    margin-top: 1.5rem;
+}
+
+.mant-result-card h3 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.mant-result-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+}
+
+.mant-result-row:last-child {
+    border-bottom: none;
+}
+
+.mant-result-label {
+    font-weight: 700;
+    color: #555;
+}
+
+.mant-result-value {
+    color: #333;
+}
+
+.mant-result-status {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.mant-status-pendiente {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.mant-status-en-proceso {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.mant-status-completado {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* ERROR / SUCCESS MESSAGES */
+.mant-message {
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.mant-message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.mant-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.mant-message.info {
+    background: #cce5ff;
+    color: #004085;
+    border: 1px solid #b8daff;
+}
+
+/* LOADING SPINNER */
+.mant-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: mant-spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+@keyframes mant-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* MODAL CONFIRMACIÓN */
+.mant-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mant-modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mant-modal {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.mant-modal-overlay.visible .mant-modal {
+    transform: translateY(0);
+}
+
+.mant-modal .modal-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.mant-modal h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.mant-modal .modal-id {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin: 1rem 0;
+    padding: 0.8rem;
+    background: #fff5ec;
+    border-radius: 10px;
+    letter-spacing: 2px;
+}
+
+.mant-modal p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.mant-modal .mant-btn-submit {
+    margin-top: 1.5rem;
+}
+
+/* SELECT TIPO */
+.mant-form-group select {
+    appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--primary-color) 50%),
+        linear-gradient(135deg, var(--primary-color) 50%, transparent 50%);
+    background-position:
+        calc(100% - 20px) calc(1em),
+        calc(100% - 14px) calc(1em);
+    background-size:
+        6px 6px,
+        6px 6px;
+    background-repeat: no-repeat;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .mant-form-section {
+        grid-template-columns: 1fr;
+    }
+
+    .mant-form-image {
+        max-height: 300px;
+    }
+
+    .mant-form-image img {
+        min-height: 300px;
+    }
+
+    .mant-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .mant-btn-submit {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .mant-hero {
+        padding: 3rem 1rem 2rem;
+    }
+
+    .mant-form-container {
+        padding: 1.5rem;
+    }
+
+    .mant-search-form {
+        flex-direction: column;
+    }
+
+    .mant-search-form input {
+        max-width: 100%;
+    }
+
+    .mant-tab-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .mant-result-row {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+}

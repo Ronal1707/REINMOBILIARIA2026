@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description"
+        content="Solicite mantenimientos para su inmueble y consulte el estado de sus solicitudes. RE Inmobiliaria SAS.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+
+    <!-- OG Metadata -->
+    <meta property="og:title" content="Mantenimientos — RE Inmobiliaria SAS">
+    <meta property="og:site_name" content="RE Inmobiliaria SAS">
+    <meta property="og:description"
+        content="Reporte daños o solicite mantenimientos para su inmueble. Seguimiento en tiempo real con ID de solicitud.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/img/reisas-og-img.jpg">
+
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/footer.css">
+    <title>Mantenimientos — RE Inmobiliaria SAS</title>
+    <link rel="stylesheet" href="styles/mantenimientos.css">
+</head>
+
+<body>
+    <header id="main-header-container"></header>
+
+    <!-- ═══════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════ -->
+    <section class="mant-hero">
+        <h1>Solicitud de <span>Mantenimientos</span></h1>
+        <p>Reporte daños o solicite reparaciones en su inmueble. Le asignamos un ID para que pueda hacer seguimiento en
+            todo momento.</p>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         TABS
+    ═══════════════════════════════════════════ -->
+    <nav class="mant-tabs-nav">
+        <button class="mant-tab-btn active" data-tab="solicitar">Solicitar mantenimiento</button>
+        <button class="mant-tab-btn" data-tab="consultar">Consultar estado</button>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         PANEL: SOLICITAR MANTENIMIENTO
+    ═══════════════════════════════════════════ -->
+    <div class="mant-tab-panel active" id="tab-solicitar">
+        <section class="mant-form-section">
+
+            <!-- IMAGEN -->
+            <div class="mant-form-image">
+                <img src="assets/img/img-plomero.png" alt="Técnico realizando mantenimiento de plomería en una cocina">
+            </div>
+
+            <!-- FORMULARIO -->
+            <div class="mant-form-container">
+                <h2>Mantenimientos</h2>
+
+                <form class="mant-form" id="form-mantenimiento">
+
+                    <div class="mant-form-row">
+                        <div class="mant-form-group">
+                            <label>Persona que notifica <span class="required">*</span></label>
+                            <input type="text" name="persona_notifica" placeholder="Ingresa tu nombre" required>
+                        </div>
+                        <div class="mant-form-group">
+                            <label>Dirección del inmueble <span class="required">*</span></label>
+                            <input type="text" name="direccion" placeholder="Ingresa tu dirección" required>
+                        </div>
+                    </div>
+
+                    <div class="mant-form-row">
+                        <div class="mant-form-group">
+                            <label>Nombre del arrendatario <span class="required">*</span></label>
+                            <input type="text" name="nombre_arrendatario" placeholder="Ingresa nombre completo"
+                                required>
+                        </div>
+                        <div class="mant-form-group">
+                            <label>Documento del arrendatario <span class="required">*</span></label>
+                            <input type="text" name="documento_arrendatario" placeholder="Ingresa el documento"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="mant-form-row">
+                        <div class="mant-form-group">
+                            <label>Número de contacto <span class="required">*</span></label>
+                            <input type="tel" name="telefono" placeholder="Ingresa tu contacto" required>
+                        </div>
+                        <div class="mant-form-group">
+                            <label>Correo electrónico <span class="required">*</span></label>
+                            <input type="email" name="correo" placeholder="Ingresa tu correo" required>
+                        </div>
+                    </div>
+
+                    <div class="mant-form-group">
+                        <label>Tipo de mantenimiento <span class="required">*</span></label>
+                        <select name="tipo_mantenimiento" required>
+                            <option value="" disabled selected>Seleccione el tipo</option>
+                            <option value="Plomería">Plomería</option>
+                            <option value="Electricidad">Electricidad</option>
+                            <option value="Cerrajería">Cerrajería</option>
+                            <option value="Pintura">Pintura</option>
+                            <option value="Humedades">Humedades</option>
+                            <option value="Pisos y acabados">Pisos y acabados</option>
+                            <option value="Puertas y ventanas">Puertas y ventanas</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="mant-form-group">
+                        <label>Complete la información <span class="required">*</span></label>
+                        <textarea name="descripcion" placeholder="Cuéntanos tu caso con detalle..." required></textarea>
+                    </div>
+
+                    <div class="mant-form-group">
+                        <label>Subir archivos <span class="required">*</span></label>
+                        <div class="mant-file-upload" id="file-upload-area">
+                            <span class="upload-icon">📷</span>
+                            <p>Sube fotos y videos</p>
+                            <input type="file" id="file-input" multiple accept="image/*,video/*,.pdf">
+                        </div>
+                        <div class="mant-file-list" id="file-list"></div>
+                    </div>
+
+                    <div id="form-message"></div>
+
+                    <button type="submit" class="mant-btn-submit" id="btn-enviar">
+                        Enviar
+                    </button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         PANEL: CONSULTAR ESTADO
+    ═══════════════════════════════════════════ -->
+    <div class="mant-tab-panel" id="tab-consultar">
+        <section class="mant-search-section">
+            <div class="mant-search-container">
+                <h2>Consultar mantenimiento</h2>
+                <p>Ingrese el ID de mantenimiento que recibió en su correo de confirmación.</p>
+
+                <div class="mant-search-form">
+                    <input type="text" id="search-id" placeholder="Ej: MNT-2026-00001">
+                    <button id="btn-buscar-mant">Buscar</button>
+                </div>
+
+                <div id="search-result"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         MODAL CONFIRMACIÓN
+    ═══════════════════════════════════════════ -->
+    <div class="mant-modal-overlay" id="modal-confirmacion">
+        <div class="mant-modal">
+            <div class="modal-icon">✅</div>
+            <h3>Solicitud enviada con éxito</h3>
+            <div class="modal-id" id="modal-mant-id"></div>
+            <p>Guarde este ID para consultar el estado de su mantenimiento. También le enviamos una confirmación a su
+                correo electrónico.</p>
+            <button class="mant-btn-submit" id="btn-cerrar-modal">Entendido</button>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="dist/footer.js"></script>
+    <script id="site" type="module" src="dist/main.js"></script>
+
+    <script>
+        // ══════════════════════════════════════════
+        // CONFIGURACIÓN - URL DE GOOGLE APPS SCRIPT
+        // ══════════════════════════════════════════
+        // IMPORTANTE: Reemplaza esta URL con la de tu Google Apps Script desplegado
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw10Nq4DW_ZSyBlC0spL3v4tZS9SMCX8owLWgoY-zQzqORiFZJE-1Nf8QNLBt0Dewja7A/exec';
+
+        // ── TABS ──
+        const mantTabBtns = document.querySelectorAll('.mant-tab-btn');
+        const mantTabPanels = document.querySelectorAll('.mant-tab-panel');
+
+        mantTabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.dataset.tab;
+                mantTabBtns.forEach(b => b.classList.remove('active'));
+                mantTabPanels.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('tab-' + target).classList.add('active');
+            });
+        });
+
+        // ── FILE UPLOAD ──
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
+        let selectedFiles = [];
+
+        fileInput.addEventListener('change', (e) => {
+            const newFiles = Array.from(e.target.files);
+            selectedFiles = [...selectedFiles, ...newFiles];
+            renderFileList();
+        });
+
+        function renderFileList() {
+            fileList.innerHTML = '';
+            selectedFiles.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'mant-file-item';
+                item.innerHTML = `
+                    <span>${file.name}</span>
+                    <button type="button" data-index="${index}">&times;</button>
+                `;
+                item.querySelector('button').addEventListener('click', () => {
+                    selectedFiles.splice(index, 1);
+                    renderFileList();
+                });
+                fileList.appendChild(item);
+            });
+        }
+
+        // ── CONVERTIR ARCHIVO A BASE64 ──
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve({
+                    name: file.name,
+                    type: file.type,
+                    data: reader.result.split(',')[1]
+                });
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // ── ENVIAR FORMULARIO ──
+        const form = document.getElementById('form-mantenimiento');
+        const btnEnviar = document.getElementById('btn-enviar');
+        const formMessage = document.getElementById('form-message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validar que hay archivos
+            if (selectedFiles.length === 0) {
+                showMessage(formMessage, 'Por favor, suba al menos una foto o video del daño.', 'error');
+                return;
+            }
+
+            // Deshabilitar botón
+            btnEnviar.disabled = true;
+            btnEnviar.innerHTML = '<span class="mant-spinner"></span> Enviando...';
+            formMessage.innerHTML = '';
+
+            try {
+                // Convertir archivos a base64
+                const filesBase64 = await Promise.all(
+                    selectedFiles.map(f => fileToBase64(f))
+                );
+
+                // Recopilar datos del formulario
+                const formData = new FormData(form);
+                const data = {
+                    action: 'crear',
+                    persona_notifica: formData.get('persona_notifica'),
+                    direccion: formData.get('direccion'),
+                    nombre_arrendatario: formData.get('nombre_arrendatario'),
+                    documento_arrendatario: formData.get('documento_arrendatario'),
+                    telefono: formData.get('telefono'),
+                    correo: formData.get('correo'),
+                    tipo_mantenimiento: formData.get('tipo_mantenimiento'),
+                    descripcion: formData.get('descripcion'),
+                    archivos: filesBase64
+                };
+
+                // Enviar a Google Apps Script
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(data)
+                });
+
+                // Con no-cors no podemos leer la respuesta, usamos redirect
+                // Alternativa: usar modo JSONP o script tag
+                // Por ahora, hacemos la petición con redirect
+                const scriptResponse = await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    const callbackName = 'mantCallback_' + Date.now();
+
+                    window[callbackName] = (response) => {
+                        resolve(response);
+                        delete window[callbackName];
+                        document.body.removeChild(script);
+                    };
+
+                    const params = new URLSearchParams({
+                        action: 'crear',
+                        callback: callbackName,
+                        ...Object.fromEntries(
+                            Object.entries(data).filter(([key]) => key !== 'archivos' && key !== 'action')
+                        ),
+                        archivos: JSON.stringify(filesBase64)
+                    });
+
+                    script.src = APPS_SCRIPT_URL + '?' + params.toString();
+                    script.onerror = () => reject(new Error('Error de conexión'));
+                    document.body.appendChild(script);
+
+                    // Timeout
+                    setTimeout(() => {
+                        if (window[callbackName]) {
+                            reject(new Error('Tiempo de espera agotado'));
+                            delete window[callbackName];
+                        }
+                    }, 30000);
+                });
+
+                if (scriptResponse.success) {
+                    // Mostrar modal con ID
+                    const modal = document.getElementById('modal-confirmacion');
+                    document.getElementById('modal-mant-id').textContent = scriptResponse.id;
+                    modal.classList.add('visible');
+
+                    // Limpiar formulario
+                    form.reset();
+                    selectedFiles = [];
+                    fileList.innerHTML = '';
+                } else {
+                    showMessage(formMessage, scriptResponse.error || 'Error al enviar la solicitud.', 'error');
+                }
+
+            } catch (error) {
+                showMessage(formMessage, 'Error de conexión. Por favor intente nuevamente.', 'error');
+                console.error('Error:', error);
+            } finally {
+                btnEnviar.disabled = false;
+                btnEnviar.innerHTML = 'Enviar';
+            }
+        });
+
+        // ── CERRAR MODAL ──
+        document.getElementById('btn-cerrar-modal').addEventListener('click', () => {
+            document.getElementById('modal-confirmacion').classList.remove('visible');
+        });
+
+        document.getElementById('modal-confirmacion').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                e.currentTarget.classList.remove('visible');
+            }
+        });
+
+        // ── BUSCAR MANTENIMIENTO ──
+        const btnBuscar = document.getElementById('btn-buscar-mant');
+        const searchInput = document.getElementById('search-id');
+        const searchResult = document.getElementById('search-result');
+
+        btnBuscar.addEventListener('click', buscarMantenimiento);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') buscarMantenimiento();
+        });
+
+        async function buscarMantenimiento() {
+            const id = searchInput.value.trim();
+            if (!id) {
+                showMessage(searchResult, 'Ingrese un ID de mantenimiento.', 'error');
+                return;
+            }
+
+            btnBuscar.disabled = true;
+            btnBuscar.innerHTML = '<span class="mant-spinner"></span>';
+            searchResult.innerHTML = '';
+
+            try {
+                const response = await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    const callbackName = 'mantSearchCallback_' + Date.now();
+
+                    window[callbackName] = (response) => {
+                        resolve(response);
+                        delete window[callbackName];
+                        document.body.removeChild(script);
+                    };
+
+                    const params = new URLSearchParams({
+                        action: 'buscar',
+                        callback: callbackName,
+                        id: id
+                    });
+
+                    script.src = APPS_SCRIPT_URL + '?' + params.toString();
+                    script.onerror = () => reject(new Error('Error de conexión'));
+                    document.body.appendChild(script);
+
+                    setTimeout(() => {
+                        if (window[callbackName]) {
+                            reject(new Error('Tiempo de espera agotado'));
+                            delete window[callbackName];
+                        }
+                    }, 15000);
+                });
+
+                if (response.success) {
+                    const d = response.data;
+                    const statusClass = d.estado === 'Completado' ? 'mant-status-completado' :
+                        d.estado === 'En proceso' ? 'mant-status-en-proceso' : 'mant-status-pendiente';
+
+                    searchResult.innerHTML = `
+                        <div class="mant-result-card">
+                            <h3>Solicitud ${d.id}</h3>
+                            <div class="mant-result-row">
+                                <span class="mant-result-label">Estado:</span>
+                                <span class="mant-result-status ${statusClass}">${d.estado}</span>
+                            </div>
+                            <div class="mant-result-row">
+                                <span class="mant-result-label">Fecha:</span>
+                                <span class="mant-result-value">${d.fecha}</span>
+                            </div>
+                            <div class="mant-result-row">
+                                <span class="mant-result-label">Tipo:</span>
+                                <span class="mant-result-value">${d.tipo_mantenimiento}</span>
+                            </div>
+                            <div class="mant-result-row">
+                                <span class="mant-result-label">Dirección:</span>
+                                <span class="mant-result-value">${d.direccion}</span>
+                            </div>
+                            <div class="mant-result-row">
+                                <span class="mant-result-label">Solicitante:</span>
+                                <span class="mant-result-value">${d.persona_notifica}</span>
+                            </div>
+                            <div class="mant-result-row">
+                                <span class="mant-result-label">Descripción:</span>
+                                <span class="mant-result-value">${d.descripcion}</span>
+                            </div>
+                            ${d.observaciones ? `
+                            <div class="mant-result-row">
+                                <span class="mant-result-label">Observaciones:</span>
+                                <span class="mant-result-value">${d.observaciones}</span>
+                            </div>` : ''}
+                        </div>
+                    `;
+                } else {
+                    showMessage(searchResult, response.error || 'No se encontró la solicitud.', 'info');
+                }
+            } catch (error) {
+                showMessage(searchResult, 'Error de conexión. Intente nuevamente.', 'error');
+                console.error('Error:', error);
+            } finally {
+                btnBuscar.disabled = false;
+                btnBuscar.innerHTML = 'Buscar';
+            }
+        }
+
+        // ── MOSTRAR MENSAJES ──
+        function showMessage(container, text, type) {
+            container.innerHTML = `<div class="mant-message ${type}">${text}</div>`;
+        }
+    </script>
+</body>
+
+</html>

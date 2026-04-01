@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(du -sh \"C:/Users/ronal/OneDrive/Escritorio/REimboliliaria2026/REINMOBILIARIA2026-1/.claude/worktrees/clever-driscoll/reisas.zip\" \"C:/Users/ronal/OneDrive/Escritorio/REimboliliaria2026/REINMOBILIARIA2026-1/.claude/worktrees/clever-driscoll/reisas \\(2\\).zip\" \"C:/Users/ronal/OneDrive/Escritorio/REimboliliaria2026/REINMOBILIARIA2026-1/.claude/worktrees/clever-driscoll/reisas \\(3\\).zip\")",
-      "Bash(gh pr:*)"
+      "Bash(gh pr:*)",
+      "Bash(find /c/Users/ronal/OneDrive/Escritorio/REimboliliaria2026/REINMOBILIARIA2026-1/assets -type f -name *.css -o -name *.scss)"
     ]
   }
 }
