@@ -33,7 +33,17 @@
 
     <!-- Botón filtros móvil -->
     <button class="filtros-toggle" id="filtros-toggle">
-        &nbsp;Filtrar inmuebles
+        <svg class="filtros-toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="6" x2="20" y2="6" />
+            <line x1="4" y1="12" x2="16" y2="12" />
+            <line x1="4" y1="18" x2="12" y2="18" />
+        </svg>
+        <span class="filtros-toggle-text">Filtrar inmuebles</span>
+        <svg class="filtros-toggle-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+        </svg>
     </button>
 
     <div class="buscar-layout">
@@ -203,10 +213,9 @@
         const filtrosPanel = document.getElementById('filtros-panel');
 
         toggleBtn.addEventListener('click', () => {
-            filtrosPanel.classList.toggle('open');
-            toggleBtn.textContent = filtrosPanel.classList.contains('open')
-                ? '✕  Cerrar filtros'
-                : '🔍  Filtrar inmuebles';
+            const isOpen = filtrosPanel.classList.toggle('open');
+            toggleBtn.querySelector('.filtros-toggle-text').textContent = isOpen ? 'Cerrar filtros' : 'Filtrar inmuebles';
+            toggleBtn.querySelector('.filtros-toggle-chevron').style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
         });
 
         // ── Ocultar skeleton cuando el contenedor tenga cards ──
