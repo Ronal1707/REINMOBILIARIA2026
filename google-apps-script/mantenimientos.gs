@@ -33,9 +33,9 @@
  */
 
 // ── CONFIGURACIÓN ──
-const SPREADSHEET_ID = 'TU_SPREADSHEET_ID_AQUI';
+const SPREADSHEET_ID = '1EEe08j9XaQA6xRmU41HLPIeZYq40GyXIU7v7U9m3Hzg';
 const SHEET_NAME = 'Mantenimientos';
-const EMAIL_EMPRESA = 'info@reinmobiliariasas.com';
+const EMAIL_EMPRESA = 'redes@reinmobiliariasas.com';
 
 /**
  * Maneja peticiones GET (búsqueda y JSONP)
