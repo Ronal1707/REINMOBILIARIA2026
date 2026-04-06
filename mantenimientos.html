@@ -62,37 +62,20 @@
 
                     <div class="mant-form-row">
                         <div class="mant-form-group">
-                            <label>Persona que notifica <span class="required">*</span></label>
-                            <input type="text" name="persona_notifica" placeholder="Ingresa tu nombre" required>
-                        </div>
-                        <div class="mant-form-group">
-                            <label>Dirección del inmueble <span class="required">*</span></label>
-                            <input type="text" name="direccion" placeholder="Ingresa tu dirección" required>
-                        </div>
-                    </div>
-
-                    <div class="mant-form-row">
-                        <div class="mant-form-group">
-                            <label>Nombre del arrendatario <span class="required">*</span></label>
-                            <input type="text" name="nombre_arrendatario" placeholder="Ingresa nombre completo"
+                            <label>Número de documento del firmante del contrato <span class="required">*</span></label>
+                            <input type="text" name="cedula_firmante" placeholder="Ingresa el número de documento"
                                 required>
                         </div>
                         <div class="mant-form-group">
-                            <label>Documento del arrendatario <span class="required">*</span></label>
-                            <input type="text" name="documento_arrendatario" placeholder="Ingresa el documento"
+                            <label>Nombre de quien notifica <span class="required">*</span></label>
+                            <input type="text" name="persona_notifica" placeholder="Ingresa tu nombre completo"
                                 required>
                         </div>
                     </div>
 
-                    <div class="mant-form-row">
-                        <div class="mant-form-group">
-                            <label>Número de contacto <span class="required">*</span></label>
-                            <input type="tel" name="telefono" placeholder="Ingresa tu contacto" required>
-                        </div>
-                        <div class="mant-form-group">
-                            <label>Correo electrónico <span class="required">*</span></label>
-                            <input type="email" name="correo" placeholder="Ingresa tu correo" required>
-                        </div>
+                    <div class="mant-form-group">
+                        <label>Correo electrónico <span class="required">*</span></label>
+                        <input type="email" name="correo" placeholder="Ingresa tu correo electrónico" required>
                     </div>
 
                     <div class="mant-form-group">
@@ -102,30 +85,40 @@
                             <option value="Plomería">Plomería</option>
                             <option value="Electricidad">Electricidad</option>
                             <option value="Cerrajería">Cerrajería</option>
-                            <option value="Pintura">Pintura</option>
                             <option value="Humedades">Humedades</option>
-                            <option value="Pisos y acabados">Pisos y acabados</option>
                             <option value="Puertas y ventanas">Puertas y ventanas</option>
                             <option value="Otro">Otro</option>
                         </select>
                     </div>
 
                     <div class="mant-form-group">
-                        <label>Complete la información <span class="required">*</span></label>
+                        <label>Cuéntanos más a detalle tu caso <span class="required">*</span></label>
                         <textarea name="descripcion" placeholder="Cuéntanos tu caso con detalle..." required></textarea>
                     </div>
 
                     <div class="mant-form-group">
-                        <label>Subir archivos <span class="required">*</span></label>
+                        <label>Sube archivos enseñando el daño <span class="required">*</span></label>
                         <div class="mant-file-upload" id="file-upload-area">
                             <span class="upload-icon">📷</span>
-                            <p>Sube fotos y videos</p>
-                            <input type="file" id="file-input" multiple accept="image/*,video/*,.pdf">
+                            <p>Sube fotos y videos <span style="font-size:0.8rem;color:#aaa;">(máx. 10 archivos)</span>
+                            </p>
+                            <input type="file" id="file-input" multiple accept="image/*,video/*,.heic,.heif,.mov">
                         </div>
+                        <div id="file-upload-msg"></div>
                         <div class="mant-file-list" id="file-list"></div>
                     </div>
 
                     <div id="form-message"></div>
+
+                    <div class="mant-progress-container" id="progress-container">
+                        <div class="mant-progress-header">
+                            <span id="progress-label">Preparando archivos...</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div class="mant-progress-track">
+                            <div class="mant-progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
 
                     <button type="submit" class="mant-btn-submit" id="btn-enviar">
                         Enviar
@@ -197,11 +190,54 @@
         // ── FILE UPLOAD ──
         const fileInput = document.getElementById('file-input');
         const fileList = document.getElementById('file-list');
+        const fileUploadMsg = document.getElementById('file-upload-msg');
         let selectedFiles = [];
+
+        const MAX_FILES = 10;
+        const ALLOWED_TYPES = ['image/', 'video/'];
+        const ALLOWED_EXTS = ['heic', 'heif', 'mov'];
+
+        function isFileAllowed(f) {
+            // Validar por MIME type
+            if (ALLOWED_TYPES.some(t => f.type.startsWith(t))) return true;
+            // Fallback por extensión (necesario para HEIC/MOV en algunos navegadores)
+            const ext = f.name.split('.').pop().toLowerCase();
+            return ALLOWED_EXTS.includes(ext);
+        }
 
         fileInput.addEventListener('change', (e) => {
             const newFiles = Array.from(e.target.files);
-            selectedFiles = [...selectedFiles, ...newFiles];
+            const errors = [];
+
+            // Filtrar solo fotos y videos (incluyendo HEIC y MOV)
+            const validFiles = newFiles.filter(f => {
+                if (!isFileAllowed(f)) {
+                    errors.push(`"${f.name}" no es una foto ni video y fue ignorado.`);
+                    return false;
+                }
+                return true;
+            });
+
+            // Verificar límite de 10 archivos
+            const combined = [...selectedFiles, ...validFiles];
+            if (combined.length > MAX_FILES) {
+                errors.push(`Solo se permiten máximo ${MAX_FILES} archivos. Se ignoraron los excedentes.`);
+                selectedFiles = combined.slice(0, MAX_FILES);
+            } else {
+                selectedFiles = combined;
+            }
+
+            // Mostrar avisos si los hay
+            if (errors.length > 0) {
+                fileUploadMsg.innerHTML = errors.map(err =>
+                    `<div class="mant-message error" style="margin-top:6px;padding:8px 12px;font-size:0.85rem;">${err}</div>`
+                ).join('');
+            } else {
+                fileUploadMsg.innerHTML = '';
+            }
+
+            // Reset input para permitir re-selección
+            fileInput.value = '';
             renderFileList();
         });
 
@@ -222,10 +258,15 @@
             });
         }
 
-        // ── CONVERTIR ARCHIVO A BASE64 ──
-        function fileToBase64(file) {
+        // ── CONVERTIR ARCHIVO A BASE64 (con progreso opcional) ──
+        function fileToBase64(file, onProgress) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
+                if (onProgress) {
+                    reader.onprogress = (e) => {
+                        if (e.lengthComputable) onProgress(e.loaded / e.total);
+                    };
+                }
                 reader.onload = () => resolve({
                     name: file.name,
                     type: file.type,
@@ -240,6 +281,17 @@
         const form = document.getElementById('form-mantenimiento');
         const btnEnviar = document.getElementById('btn-enviar');
         const formMessage = document.getElementById('form-message');
+        const progressContainer = document.getElementById('progress-container');
+        const progressFill = document.getElementById('progress-fill');
+        const progressLabel = document.getElementById('progress-label');
+        const progressPercent = document.getElementById('progress-percent');
+
+        function updateProgress(pct, label) {
+            const clamped = Math.min(100, Math.max(0, Math.round(pct)));
+            progressFill.style.width = clamped + '%';
+            progressPercent.textContent = clamped + '%';
+            if (label !== undefined) progressLabel.textContent = label;
+        }
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -250,82 +302,107 @@
                 return;
             }
 
-            // Deshabilitar botón
+            // Deshabilitar botón y mostrar barra de progreso
             btnEnviar.disabled = true;
             btnEnviar.innerHTML = '<span class="mant-spinner"></span> Enviando...';
             formMessage.innerHTML = '';
+            progressContainer.classList.add('visible');
+            updateProgress(0, 'Preparando archivos...');
 
             try {
-                // Convertir archivos a base64
-                const filesBase64 = await Promise.all(
-                    selectedFiles.map(f => fileToBase64(f))
-                );
+                // ── FASE 1 (0% → 60%): Codificación secuencial con progreso por archivo ──
+                const filesBase64 = [];
+                const fileShare = 60 / selectedFiles.length;
 
-                // Recopilar datos del formulario
-                const formData = new FormData(form);
-                const data = {
-                    action: 'crear',
-                    persona_notifica: formData.get('persona_notifica'),
-                    direccion: formData.get('direccion'),
-                    nombre_arrendatario: formData.get('nombre_arrendatario'),
-                    documento_arrendatario: formData.get('documento_arrendatario'),
-                    telefono: formData.get('telefono'),
-                    correo: formData.get('correo'),
-                    tipo_mantenimiento: formData.get('tipo_mantenimiento'),
-                    descripcion: formData.get('descripcion'),
-                    archivos: filesBase64
-                };
-
-                // Enviar a Google Apps Script
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' },
-                    body: JSON.stringify(data)
-                });
-
-                // Con no-cors no podemos leer la respuesta, usamos redirect
-                // Alternativa: usar modo JSONP o script tag
-                // Por ahora, hacemos la petición con redirect
-                const scriptResponse = await new Promise((resolve, reject) => {
-                    const script = document.createElement('script');
-                    const callbackName = 'mantCallback_' + Date.now();
-
-                    window[callbackName] = (response) => {
-                        resolve(response);
-                        delete window[callbackName];
-                        document.body.removeChild(script);
-                    };
-
-                    const params = new URLSearchParams({
-                        action: 'crear',
-                        callback: callbackName,
-                        ...Object.fromEntries(
-                            Object.entries(data).filter(([key]) => key !== 'archivos' && key !== 'action')
-                        ),
-                        archivos: JSON.stringify(filesBase64)
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    const base = i * fileShare;
+                    const result = await fileToBase64(selectedFiles[i], (ratio) => {
+                        updateProgress(
+                            base + ratio * fileShare,
+                            `Preparando archivo ${i + 1} de ${selectedFiles.length}...`
+                        );
                     });
+                    filesBase64.push(result);
+                    updateProgress(
+                        (i + 1) * fileShare,
+                        `Archivo ${i + 1} de ${selectedFiles.length} listo`
+                    );
+                }
 
-                    script.src = APPS_SCRIPT_URL + '?' + params.toString();
-                    script.onerror = () => reject(new Error('Error de conexión'));
-                    document.body.appendChild(script);
+                // Recopilar datos del formulario (sin archivos — se envían por separado)
+                const formData = new FormData(form);
 
-                    // Timeout
-                    setTimeout(() => {
-                        if (window[callbackName]) {
-                            reject(new Error('Tiempo de espera agotado'));
+                // ── FASE 2 (62% → 90%): JSONP solo con metadatos de texto ──
+                updateProgress(62, 'Enviando solicitud...');
+                let simPct = 62;
+                const progressInterval = setInterval(() => {
+                    simPct = Math.min(90, simPct + 0.8);
+                    updateProgress(simPct, 'Enviando solicitud...');
+                }, 300);
+
+                let scriptResponse;
+                try {
+                    scriptResponse = await new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        const callbackName = 'mantCallback_' + Date.now();
+
+                        window[callbackName] = (response) => {
+                            resolve(response);
                             delete window[callbackName];
-                        }
-                    }, 30000);
-                });
+                            document.body.removeChild(script);
+                        };
+
+                        // Solo campos de texto — sin archivos para no superar límite de URL
+                        const params = new URLSearchParams({
+                            action: 'crear',
+                            callback: callbackName,
+                            cedula_firmante: formData.get('cedula_firmante'),
+                            persona_notifica: formData.get('persona_notifica'),
+                            correo: formData.get('correo'),
+                            tipo_mantenimiento: formData.get('tipo_mantenimiento'),
+                            descripcion: formData.get('descripcion')
+                        });
+
+                        script.src = APPS_SCRIPT_URL + '?' + params.toString();
+                        script.onerror = () => reject(new Error('Error de conexión'));
+                        document.body.appendChild(script);
+
+                        setTimeout(() => {
+                            if (window[callbackName]) {
+                                reject(new Error('Tiempo de espera agotado'));
+                                delete window[callbackName];
+                            }
+                        }, 30000);
+                    });
+                } finally {
+                    clearInterval(progressInterval);
+                }
+
+                // ── FASE 3 (97% → 100%): Completando ──
+                updateProgress(97, 'Completando...');
+                await new Promise(r => setTimeout(r, 400));
+                updateProgress(100, '¡Solicitud enviada!');
+                await new Promise(r => setTimeout(r, 300));
 
                 if (scriptResponse.success) {
-                    // Mostrar modal con ID
+                    // Enviar archivos en background con el ID ya generado
+                    if (filesBase64.length > 0) {
+                        fetch(APPS_SCRIPT_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'text/plain' },
+                            body: JSON.stringify({
+                                action: 'subir_archivos',
+                                id: scriptResponse.id,
+                                archivos: filesBase64
+                            })
+                        });
+                        // fire-and-forget: no esperamos respuesta
+                    }
+
                     const modal = document.getElementById('modal-confirmacion');
                     document.getElementById('modal-mant-id').textContent = scriptResponse.id;
                     modal.classList.add('visible');
-
-                    // Limpiar formulario
                     form.reset();
                     selectedFiles = [];
                     fileList.innerHTML = '';
@@ -339,6 +416,8 @@
             } finally {
                 btnEnviar.disabled = false;
                 btnEnviar.innerHTML = 'Enviar';
+                progressContainer.classList.remove('visible');
+                updateProgress(0, '');
             }
         });
 
@@ -420,16 +499,16 @@
                                 <span class="mant-result-value">${d.fecha}</span>
                             </div>
                             <div class="mant-result-row">
-                                <span class="mant-result-label">Tipo:</span>
-                                <span class="mant-result-value">${d.tipo_mantenimiento}</span>
-                            </div>
-                            <div class="mant-result-row">
-                                <span class="mant-result-label">Dirección:</span>
-                                <span class="mant-result-value">${d.direccion}</span>
+                                <span class="mant-result-label">Documento firmante:</span>
+                                <span class="mant-result-value">${d.cedula_firmante}</span>
                             </div>
                             <div class="mant-result-row">
                                 <span class="mant-result-label">Solicitante:</span>
                                 <span class="mant-result-value">${d.persona_notifica}</span>
+                            </div>
+                            <div class="mant-result-row">
+                                <span class="mant-result-label">Tipo:</span>
+                                <span class="mant-result-value">${d.tipo_mantenimiento}</span>
                             </div>
                             <div class="mant-result-row">
                                 <span class="mant-result-label">Descripción:</span>
@@ -457,6 +536,15 @@
         // ── MOSTRAR MENSAJES ──
         function showMessage(container, text, type) {
             container.innerHTML = `<div class="mant-message ${type}">${text}</div>`;
+        }
+
+        // ── LEER PARÁMETRO URL PARA CONSULTA DIRECTA DESDE CORREO ──
+        const urlParams = new URLSearchParams(window.location.search);
+        const idParam = urlParams.get('id');
+        if (idParam) {
+            document.querySelector('[data-tab="consultar"]').click();
+            document.getElementById('search-id').value = idParam;
+            buscarMantenimiento();
         }
     </script>
 </body>

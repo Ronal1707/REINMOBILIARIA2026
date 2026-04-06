@@ -10,9 +10,8 @@
  * 2. Copia y pega todo este código en el editor.
  * 3. Crea una hoja de cálculo en Google Sheets con el nombre "Mantenimientos RE Inmobiliaria".
  * 4. En la hoja, crea los siguientes encabezados en la fila 1:
- *    A: ID | B: Fecha | C: Persona que notifica | D: Dirección | E: Nombre arrendatario
- *    F: Documento arrendatario | G: Teléfono | H: Correo | I: Tipo de mantenimiento
- *    J: Descripción | K: Estado | L: Archivos | M: Observaciones
+ *    A: ID | B: Fecha | C: Cédula firmante | D: Persona que notifica | E: Correo
+ *    F: Tipo de mantenimiento | G: Descripción | H: Estado | I: Archivos | J: Observaciones
  *
  * 5. Reemplaza SPREADSHEET_ID con el ID de tu hoja de cálculo
  *    (el ID está en la URL: https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit)
@@ -52,6 +51,8 @@ function doGet(e) {
       result = crearMantenimiento(params);
     } else if (action === 'buscar') {
       result = buscarMantenimiento(params.id);
+    } else if (action === 'subir_archivos') {
+      result = subirArchivos(params);
     } else {
       result = { success: false, error: 'Acción no válida.' };
     }
@@ -93,6 +94,8 @@ function doPost(e) {
     result = crearMantenimiento(data);
   } else if (data.action === 'buscar') {
     result = buscarMantenimiento(data.id);
+  } else if (data.action === 'subir_archivos') {
+    result = subirArchivos(data);
   } else {
     result = { success: false, error: 'Acción no válida.' };
   }
@@ -138,49 +141,17 @@ function crearMantenimiento(data) {
   const id = generarId();
   const fecha = Utilities.formatDate(new Date(), 'America/Bogota', 'dd/MM/yyyy HH:mm');
 
-  // Guardar archivos en Google Drive (si los hay)
-  let archivosUrls = '';
-  if (data.archivos) {
-    try {
-      let archivos = typeof data.archivos === 'string' ? JSON.parse(data.archivos) : data.archivos;
-      const folder = getOrCreateFolder('Mantenimientos_RE/' + id);
-      const urls = [];
-
-      archivos.forEach(function(archivo) {
-        try {
-          const blob = Utilities.newBlob(
-            Utilities.base64Decode(archivo.data),
-            archivo.type,
-            archivo.name
-          );
-          const file = folder.createFile(blob);
-          file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-          urls.push(file.getUrl());
-        } catch (e) {
-          // Continuar si un archivo falla
-        }
-      });
-
-      archivosUrls = urls.join(', ');
-    } catch (e) {
-      archivosUrls = 'Error al procesar archivos';
-    }
-  }
-
-  // Agregar fila a la hoja
+  // Agregar fila a la hoja (archivos llegarán en una segunda petición)
   sheet.appendRow([
     id,
     fecha,
+    data.cedula_firmante || '',
     data.persona_notifica || '',
-    data.direccion || '',
-    data.nombre_arrendatario || '',
-    data.documento_arrendatario || '',
-    data.telefono || '',
     data.correo || '',
     data.tipo_mantenimiento || '',
     data.descripcion || '',
     'Pendiente',
-    archivosUrls,
+    '',
     ''
   ]);
 
@@ -210,7 +181,7 @@ function buscarMantenimiento(id) {
     return { success: false, error: 'No se encontró la solicitud con ID: ' + id };
   }
 
-  const data = sheet.getRange(2, 1, lastRow - 1, 13).getValues();
+  const data = sheet.getRange(2, 1, lastRow - 1, 10).getValues();
 
   for (let i = 0; i < data.length; i++) {
     if (data[i][0].toString().toUpperCase() === id.toUpperCase()) {
@@ -219,16 +190,13 @@ function buscarMantenimiento(id) {
         data: {
           id: data[i][0],
           fecha: data[i][1],
-          persona_notifica: data[i][2],
-          direccion: data[i][3],
-          nombre_arrendatario: data[i][4],
-          documento_arrendatario: data[i][5],
-          telefono: data[i][6],
-          correo: data[i][7],
-          tipo_mantenimiento: data[i][8],
-          descripcion: data[i][9],
-          estado: data[i][10],
-          observaciones: data[i][12]
+          cedula_firmante: data[i][2],
+          persona_notifica: data[i][3],
+          correo: data[i][4],
+          tipo_mantenimiento: data[i][5],
+          descripcion: data[i][6],
+          estado: data[i][7],
+          observaciones: data[i][9]
         }
       };
     }
@@ -238,22 +206,25 @@ function buscarMantenimiento(id) {
 }
 
 /**
- * Obtiene o crea una carpeta en Google Drive
+ * Obtiene o crea una carpeta en la raíz de Drive por nombre
  */
-function getOrCreateFolder(path) {
-  const parts = path.split('/');
-  let folder = DriveApp.getRootFolder();
+function getOrCreateFolderByName(name) {
+  const iter = DriveApp.getRootFolder().getFoldersByName(name);
+  if (iter.hasNext()) {
+    return iter.next();
+  }
+  return DriveApp.getRootFolder().createFolder(name);
+}
 
-  parts.forEach(function(name) {
-    const folders = folder.getFoldersByName(name);
-    if (folders.hasNext()) {
-      folder = folders.next();
-    } else {
-      folder = folder.createFolder(name);
-    }
-  });
-
-  return folder;
+/**
+ * Obtiene o crea una subcarpeta dentro de una carpeta padre
+ */
+function getOrCreateSubFolder(parentFolder, name) {
+  const iter = parentFolder.getFoldersByName(name);
+  if (iter.hasNext()) {
+    return iter.next();
+  }
+  return parentFolder.createFolder(name);
 }
 
 /**
@@ -298,7 +269,16 @@ function enviarCorreoConfirmacion(data, id, fecha) {
               <div class="id">${id}</div>
             </div>
 
-            <p>Guarde este ID para consultar el estado de su solicitud en cualquier momento desde nuestra página web.</p>
+            <p>Use el botón a continuación para consultar el estado de su solicitud en cualquier momento:</p>
+
+            <div style="text-align:center; margin: 24px 0;">
+              <a href="https://reinmobiliariasas.com/mantenimientos.html?id=${id}"
+                 style="display:inline-block; background:#e56d11; color:#ffffff; padding:14px 32px;
+                        border-radius:10px; font-weight:700; font-size:16px; text-decoration:none;
+                        letter-spacing:0.5px;">
+                Consultar estado de mi solicitud
+              </a>
+            </div>
 
             <div class="detail">
               <span class="label">Estado:</span>
@@ -309,12 +289,16 @@ function enviarCorreoConfirmacion(data, id, fecha) {
               <span class="value">${fecha}</span>
             </div>
             <div class="detail">
-              <span class="label">Tipo:</span>
-              <span class="value">${data.tipo_mantenimiento}</span>
+              <span class="label">Documento firmante:</span>
+              <span class="value">${data.cedula_firmante}</span>
             </div>
             <div class="detail">
-              <span class="label">Dirección:</span>
-              <span class="value">${data.direccion}</span>
+              <span class="label">Persona que notifica:</span>
+              <span class="value">${data.persona_notifica}</span>
+            </div>
+            <div class="detail">
+              <span class="label">Tipo de mantenimiento:</span>
+              <span class="value">${data.tipo_mantenimiento}</span>
             </div>
             <div class="detail">
               <span class="label">Descripción:</span>
@@ -344,8 +328,90 @@ function enviarCorreoConfirmacion(data, id, fecha) {
 }
 
 /**
- * Envía notificación interna a la empresa
+ * Sube archivos a Drive y actualiza la fila en Sheets
  */
+function subirArchivos(data) {
+  try {
+    const id = data.id;
+    if (!id) return { success: false, error: 'ID requerido.' };
+
+    let archivos = typeof data.archivos === 'string'
+      ? JSON.parse(data.archivos) : data.archivos;
+    if (!archivos || !archivos.length) return { success: true, archivos: 0 };
+
+    const rootFolder = getOrCreateFolderByName('Mantenimientos');
+    const folder = getOrCreateSubFolder(rootFolder, id);
+    const folderUrl = folder.getUrl();
+    const urls = [];
+
+    archivos.forEach(function(archivo) {
+      try {
+        const mimeType = archivo.type || '';
+        const ext = (archivo.name || '').split('.').pop().toLowerCase();
+        const allowedExts = ['heic', 'heif', 'mov'];
+        const validMime = mimeType.startsWith('image/') || mimeType.startsWith('video/');
+        if (!validMime && !allowedExts.includes(ext)) return;
+
+        const blob = Utilities.newBlob(
+          Utilities.base64Decode(archivo.data),
+          archivo.type,
+          archivo.name
+        );
+        const file = folder.createFile(blob);
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+        urls.push(file.getUrl());
+      } catch (e) {}
+    });
+
+    // Actualizar columna I (Archivos) en el Sheets
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+    const lastRow = sheet.getLastRow();
+    if (lastRow > 1) {
+      const ids = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
+      for (let i = 0; i < ids.length; i++) {
+        if (ids[i][0].toString().toUpperCase() === id.toUpperCase()) {
+          sheet.getRange(i + 2, 9).setValue(urls.join(', '));
+          break;
+        }
+      }
+    }
+
+    // Notificar a la empresa con el link a Drive
+    enviarNotificacionArchivos(id, folderUrl, urls.length);
+
+    return { success: true, archivos: urls.length };
+  } catch (e) {
+    return { success: false, error: e.message };
+  }
+}
+
+/**
+ * Correo breve a redes@ cuando los archivos ya están en Drive
+ */
+function enviarNotificacionArchivos(id, folderUrl, total) {
+  try {
+    MailApp.sendEmail({
+      to: EMAIL_EMPRESA,
+      subject: '📁 Archivos disponibles — ' + id,
+      htmlBody: `
+        <!DOCTYPE html><html><body style="font-family:Arial,sans-serif;padding:20px;">
+          <div style="background:#fff3cd;border-left:5px solid #1a73e8;padding:15px 20px;border-radius:8px;margin-bottom:20px;">
+            <strong>${total} archivo(s) subidos para la solicitud ${id}</strong>
+          </div>
+          <p>Los archivos enviados por el cliente ya están disponibles en Google Drive.</p>
+          <a href="${folderUrl}"
+             style="background:#1a73e8;color:white;padding:10px 20px;border-radius:8px;
+                    text-decoration:none;font-weight:bold;display:inline-block;">
+            📁 Ver carpeta en Drive
+          </a>
+        </body></html>
+      `
+    });
+  } catch (e) {
+    console.log('Error notificando archivos: ' + e.message);
+  }
+}
+
 function enviarNotificacionEmpresa(data, id, fecha) {
   try {
     const htmlBody = `
@@ -365,21 +431,17 @@ function enviarNotificacionEmpresa(data, id, fecha) {
         </div>
 
         <div class="detail"><span class="label">Fecha:</span> ${fecha}</div>
+        <div class="detail"><span class="label">Documento firmante:</span> ${data.cedula_firmante}</div>
         <div class="detail"><span class="label">Persona que notifica:</span> ${data.persona_notifica}</div>
-        <div class="detail"><span class="label">Arrendatario:</span> ${data.nombre_arrendatario}</div>
-        <div class="detail"><span class="label">Documento:</span> ${data.documento_arrendatario}</div>
-        <div class="detail"><span class="label">Dirección:</span> ${data.direccion}</div>
-        <div class="detail"><span class="label">Teléfono:</span> ${data.telefono}</div>
         <div class="detail"><span class="label">Correo:</span> ${data.correo}</div>
         <div class="detail"><span class="label">Tipo:</span> ${data.tipo_mantenimiento}</div>
         <div class="detail"><span class="label">Descripción:</span> ${data.descripcion}</div>
 
-        <p style="margin-top: 20px;">
-          <a href="https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}"
-             style="background: #e56d11; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
-            Ver en Google Sheets
-          </a>
-        </p>
+        <p style="margin-top: 24px; margin-bottom: 8px; font-weight: bold; color: #333;">Accesos rápidos:</p>
+        <a href="https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}"
+           style="background:#e56d11; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:bold; display:inline-block;">
+          📊 Ver en Google Sheets
+        </a>
       </body>
       </html>
     `;
@@ -391,5 +453,113 @@ function enviarNotificacionEmpresa(data, id, fecha) {
     });
   } catch (e) {
     console.log('Error enviando notificación a la empresa: ' + e.message);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// FUNCIONES DE DIAGNÓSTICO — Ejecútalas manualmente en el editor
+// para verificar que todo funciona antes de redesplegar.
+// ══════════════════════════════════════════════════════════════
+
+/**
+ * TEST 1: Verificar que los correos se envían correctamente.
+ * Cambia 'tu_correo@gmail.com' por tu correo real antes de ejecutar.
+ * Deberías recibir 2 correos: uno de confirmación al cliente y otro a redes@.
+ */
+function testCorreos() {
+  const fakeData = {
+    cedula_firmante: '12345678',
+    persona_notifica: 'Usuario de Prueba',
+    correo: 'tu_correo@gmail.com',  // ← CAMBIA ESTO por tu correo real
+    tipo_mantenimiento: 'Plomería',
+    descripcion: 'Prueba de diagnóstico — verificando que los correos llegan correctamente.'
+  };
+  const id = 'MNT-TEST-00000';
+  const fecha = Utilities.formatDate(new Date(), 'America/Bogota', 'dd/MM/yyyy HH:mm');
+
+  console.log('Enviando correo al cliente: ' + fakeData.correo);
+  enviarCorreoConfirmacion(fakeData, id, fecha);
+  console.log('Enviando correo a la empresa: ' + EMAIL_EMPRESA);
+  enviarNotificacionEmpresa(fakeData, id, fecha);
+  console.log('✅ Correos enviados. Revisa tu bandeja de entrada y la de redes@.');
+}
+
+/**
+ * TEST 2: Verificar que el Sheets se puede leer y escribir.
+ * Muestra en el log el número de filas existentes.
+ */
+function testSheets() {
+  const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+  const lastRow = sheet.getLastRow();
+  console.log('✅ Sheets accesible. Filas totales: ' + lastRow);
+  if (lastRow > 1) {
+    const primerID = sheet.getRange(2, 1).getValue();
+    console.log('Primer ID en Sheets: ' + primerID);
+  }
+}
+
+/**
+ * TEST 3: Verificar que Google Drive es accesible y crear carpeta de prueba.
+ * Crea (o abre si ya existe) la carpeta "Mantenimientos/MNT-TEST-00000" en Drive.
+ */
+function testDrive() {
+  const rootFolder = getOrCreateFolderByName('Mantenimientos');
+  console.log('Carpeta raíz "Mantenimientos": ' + rootFolder.getUrl());
+  const subFolder = getOrCreateSubFolder(rootFolder, 'MNT-TEST-00000');
+  console.log('✅ Subcarpeta de prueba: ' + subFolder.getUrl());
+}
+
+/**
+ * TEST 4: Simular recepción de un POST con archivos para una solicitud real.
+ * Cambia 'MNT-2026-XXXXX' por un ID que exista en tu Sheets.
+ * NO sube archivos reales (archivos vacío), pero prueba todo lo demás:
+ * actualiza la columna I del Sheets con 'SIN ARCHIVOS' y envía correo a redes@.
+ */
+function testSubirArchivosReal() {
+  const id = 'MNT-2026-00001';  // ← CAMBIA por un ID real que esté en Sheets
+
+  // Crear carpeta en Drive para ese ID
+  const rootFolder = getOrCreateFolderByName('Mantenimientos');
+  const folder = getOrCreateSubFolder(rootFolder, id);
+  const folderUrl = folder.getUrl();
+  console.log('Carpeta creada/encontrada: ' + folderUrl);
+
+  // Actualizar columna I en Sheets
+  const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+  const lastRow = sheet.getLastRow();
+  if (lastRow > 1) {
+    const ids = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
+    for (let i = 0; i < ids.length; i++) {
+      if (ids[i][0].toString().toUpperCase() === id.toUpperCase()) {
+        sheet.getRange(i + 2, 9).setValue('TEST: ' + folderUrl);
+        console.log('✅ Columna Archivos actualizada en fila ' + (i + 2));
+        break;
+      }
+    }
+  }
+
+  // Enviar correo de notificación de archivos
+  enviarNotificacionArchivos(id, folderUrl, 0);
+  console.log('✅ Correo enviado a ' + EMAIL_EMPRESA);
+}
+
+/**
+ * TEST 5: Crear un mantenimiento de prueba completo (sin archivos).
+ * Crea una fila en Sheets y envía los correos, igual que si llegara una petición real.
+ * Cambia el correo por el tuyo para verificar que llega.
+ */
+function testCrearMantenimiento() {
+  const fakeData = {
+    cedula_firmante: '99999999',
+    persona_notifica: 'Prueba Completa',
+    correo: 'tu_correo@gmail.com',  // ← CAMBIA ESTO
+    tipo_mantenimiento: 'Electricidad',
+    descripcion: 'Mantenimiento de prueba completo — verificación del sistema.'
+  };
+  const resultado = crearMantenimiento(fakeData);
+  console.log('Resultado: ' + JSON.stringify(resultado));
+  if (resultado.success) {
+    console.log('✅ ID generado: ' + resultado.id);
+    console.log('Revisa Sheets y tu correo.');
   }
 }
