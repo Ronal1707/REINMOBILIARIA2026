@@ -39,7 +39,7 @@ export function crearCard(inmueble) {
         <div class="carousel">
 
           <div class="carousel-track" data-index="0">
-            ${fotos.map(f => `<img src="${f}" class="card__image">`).join("")}
+            ${fotos.map((f, i) => `<img src="${f}" class="card__image" loading="${i === 0 ? 'eager' : 'lazy'}">`).join("")}
           </div>
 
         </div>

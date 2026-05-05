@@ -63,19 +63,20 @@
                     <div class="mant-form-row">
                         <div class="mant-form-group">
                             <label>Número de documento del firmante del contrato <span class="required">*</span></label>
-                            <input type="text" name="cedula_firmante" placeholder="Ingresa el número de documento"
-                                required>
+                            <input type="text" name="cedula_firmante" id="cedula_firmante"
+                                placeholder="Ingresa el número de documento" inputmode="numeric" required>
                         </div>
                         <div class="mant-form-group">
                             <label>Nombre de quien notifica <span class="required">*</span></label>
-                            <input type="text" name="persona_notifica" placeholder="Ingresa tu nombre completo"
-                                required>
+                            <input type="text" name="persona_notifica" id="persona_notifica"
+                                placeholder="Ingresa tu nombre completo" required>
                         </div>
                     </div>
 
                     <div class="mant-form-group">
                         <label>Correo electrónico <span class="required">*</span></label>
-                        <input type="email" name="correo" placeholder="Ingresa tu correo electrónico" required>
+                        <input type="email" name="correo" id="correo_input"
+                            placeholder="Ingresa tu correo electrónico" required>
                     </div>
 
                     <div class="mant-form-group">
@@ -93,7 +94,8 @@
 
                     <div class="mant-form-group">
                         <label>Cuéntanos más a detalle tu caso <span class="required">*</span></label>
-                        <textarea name="descripcion" placeholder="Cuéntanos tu caso con detalle..." required></textarea>
+                        <textarea name="descripcion" id="descripcion_input"
+                            placeholder="Cuéntanos tu caso con detalle..." required></textarea>
                     </div>
 
                     <div class="mant-form-group">
@@ -106,6 +108,13 @@
                         </div>
                         <div id="file-upload-msg"></div>
                         <div class="mant-file-list" id="file-list"></div>
+                    </div>
+
+                    <div class="mant-form-group mant-politica-check">
+                        <label class="mant-check-label">
+                            <input type="checkbox" id="acepta_politica" required>
+                            <span>He leído y acepto la <a href="politica-privacidad.html" target="_blank" rel="noopener">Política de Privacidad</a> y autorizo el tratamiento de mis datos personales conforme a la Ley 1581 de 2012. <span class="required">*</span></span>
+                        </label>
                     </div>
 
                     <div id="form-message"></div>
@@ -163,8 +172,8 @@
 
     <div id="footer-container"></div>
 
-    <script src="dist/footer.js"></script>
-    <script id="site" type="module" src="dist/main.js"></script>
+    <script src="src/footer.js"></script>
+    <script id="site" type="module" src="src/main.js"></script>
 
     <script>
         // ══════════════════════════════════════════
@@ -185,6 +194,23 @@
                 btn.classList.add('active');
                 document.getElementById('tab-' + target).classList.add('active');
             });
+        });
+
+        // ── SOLO NÚMEROS EN CÉDULA ──
+        document.getElementById('cedula_firmante').addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '');
+        });
+
+        // ── MINÚSCULAS EN CAMPOS DE TEXTO ──
+        ['persona_notifica', 'correo_input', 'descripcion_input'].forEach(function (id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', function () {
+                    const pos = this.selectionStart;
+                    this.value = this.value.toLowerCase();
+                    this.setSelectionRange(pos, pos);
+                });
+            }
         });
 
         // ── FILE UPLOAD ──

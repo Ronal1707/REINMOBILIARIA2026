@@ -137,13 +137,12 @@
 
     <div id="footer-container"></div>
 
-    <script src="dist/footer.js"></script>
-    <script id="site" type="module" src="dist/main.js"></script>
-    <script type="module" src="dist/api.js"></script>
+    <script src="src/footer.js"></script>
+    <script id="site" type="module" src="src/main.js"></script>
 
     <!-- inmueble.js mejorado inline para aprovechar nuevos elementos sin romper el JS original -->
     <script type="module">
-        import { apiGet } from "/dist/api.js";
+        import { apiGet } from "/src/api.js";
 
         document.addEventListener("DOMContentLoaded", () => {
             const params = new URLSearchParams(window.location.search);

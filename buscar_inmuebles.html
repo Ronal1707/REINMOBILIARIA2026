@@ -15,6 +15,7 @@
     <meta property="og:type" content="website">
     <meta property="og:image" content="assets/img/reisas-og-img.jpg">
 
+    <link rel="preconnect" href="https://simi-api.com">
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
     <link rel="stylesheet" type="text/css" href="styles/main.css" />
     <link rel="stylesheet" href="styles/footer.css">
@@ -202,11 +203,11 @@
 
     <div id="footer-container"></div>
 
-    <script src="dist/footer.js"></script>
-    <script type="module" src="dist/buscar_inmuebles.js"></script>
-    <script type="module" src="dist/bedroomsBathrooms.js"></script>
-    <script type="module" src="dist/main.js"></script>
-    <script type="module" src="dist/filtros.js"></script>
+    <script src="src/footer.js"></script>
+    <script type="module" src="src/buscar_inmuebles.js"></script>
+    <script type="module" src="src/bedroomsBathrooms.js"></script>
+    <script type="module" src="src/main.js"></script>
+    <script type="module" src="src/filtros.js"></script>
 
     <script>
         // ── Filtros toggle móvil ──
@@ -233,44 +234,6 @@
 
         skeletonObserver.observe(cardsSection, { childList: true });
 
-        // ── Ordenar cards ──
-        document.getElementById('f_ordenar').addEventListener('change', function () {
-            const criterio = this.value;
-            if (!criterio) return;
-
-            const cards = Array.from(cardsSection.querySelectorAll('.card'));
-            if (cards.length === 0) return;
-
-            const getPrecio = (card) => {
-                const txt = card.querySelector('.card__price')?.textContent || '0';
-                return parseFloat(txt.replace(/[^0-9]/g, '')) || 0;
-            };
-
-            const getArea = (card) => {
-                // AreaConstruida aparece como tercer spec (después de alcobas y baños)
-                const specs = card.querySelector('.card__inm__especs')?.textContent || '';
-                const match = specs.match(/(\d+(?:\.\d+)?)\s*(?:m²|m2)?/g);
-                // Toma el último número que suele ser el área
-                if (match && match.length > 0) {
-                    const ultimo = match[match.length - 1];
-                    return parseFloat(ultimo.replace(/[^0-9.]/g, '')) || 0;
-                }
-                return 0;
-            };
-
-            cards.sort((a, b) => {
-                switch (criterio) {
-                    case 'precio_asc': return getPrecio(a) - getPrecio(b);
-                    case 'precio_desc': return getPrecio(b) - getPrecio(a);
-                    case 'area_desc': return getArea(b) - getArea(a);
-                    case 'area_asc': return getArea(a) - getArea(b);
-                    default: return 0;
-                }
-            });
-
-            // Re-insertar en el DOM ordenadas
-            cards.forEach(card => cardsSection.appendChild(card));
-        });
     </script>
 </body>
 

@@ -9,6 +9,40 @@ const btn = document.getElementById("btn_filtrar");
 let cantidadActual = 12;
 const INCREMENTO = 5;
 let totalInmuebles = 0;
+let buscando = false;
+let ordenActivo = "";
+
+function aplicarOrden(criterio) {
+    if (!criterio) return;
+    const cards = Array.from(contenedor.querySelectorAll(".card"));
+    if (cards.length === 0) return;
+
+    const getPrecio = (card) => {
+        const txt = card.querySelector(".card__price")?.textContent || "0";
+        return parseFloat(txt.replace(/[^0-9]/g, "")) || 0;
+    };
+
+    const getArea = (card) => {
+        const specs = card.querySelector(".card__inm__especs")?.textContent || "";
+        const match = specs.match(/(\d+(?:\.\d+)?)\s*(?:m²|m2)?/g);
+        if (match && match.length > 0) {
+            return parseFloat(match[match.length - 1].replace(/[^0-9.]/g, "")) || 0;
+        }
+        return 0;
+    };
+
+    cards.sort((a, b) => {
+        switch (criterio) {
+            case "precio_asc": return getPrecio(a) - getPrecio(b);
+            case "precio_desc": return getPrecio(b) - getPrecio(a);
+            case "area_desc": return getArea(b) - getArea(a);
+            case "area_asc": return getArea(a) - getArea(b);
+            default: return 0;
+        }
+    });
+
+    cards.forEach(card => contenedor.appendChild(card));
+}
 
 function renderCargarMas() {
     const pag = document.getElementById("paginacion");
@@ -39,6 +73,8 @@ function renderCargarMas() {
 
 
 async function cargarInmuebles(reset = false) {
+    if (buscando) return;
+    buscando = true;
     console.group("🔄 cargarInmuebles");
 
     try {
@@ -67,6 +103,7 @@ async function cargarInmuebles(reset = false) {
             .map(inm => crearCard(inm))
             .join("");
 
+        aplicarOrden(ordenActivo);
         renderCargarMas();
 
     } catch (err) {
@@ -74,6 +111,8 @@ async function cargarInmuebles(reset = false) {
         estado.style.color = "red";
 
         contenedor.innerHTML = `<p>Error: ${err.message}</p>`;
+    } finally {
+        buscando = false;
     }
 
     console.groupEnd();
@@ -130,8 +169,19 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
+        if (buscando) return;
+        btn.disabled = true;
         cantidadActual = 12;
-        cargarInmuebles(true);
+        await cargarInmuebles(true);
+        btn.disabled = false;
     });
+
+    const selectOrden = document.getElementById("f_ordenar");
+    if (selectOrden) {
+        selectOrden.addEventListener("change", function () {
+            ordenActivo = this.value;
+            aplicarOrden(ordenActivo);
+        });
+    }
 });
